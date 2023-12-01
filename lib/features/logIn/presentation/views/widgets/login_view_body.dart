@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:foody/constants.dart';
-import 'package:foody/core/common/widgets/custom_button.dart';
-import 'package:foody/core/common/widgets/custom_text_form_field.dart';
-import 'package:foody/core/common/widgets/outSide_registeration.dart';
-import 'package:foody/core/utils/app_router.dart';
-import 'package:foody/core/utils/asset_data.dart';
-import 'package:foody/core/utils/styles.dart';
 import 'package:go_router/go_router.dart';
 
-class SignInViewBody extends StatelessWidget {
-  const SignInViewBody({super.key});
+import '../../../../../constants.dart';
+import '../../../../../core/common/widgets/custom_button.dart';
+import '../../../../../core/common/widgets/custom_text_form_field.dart';
+import '../../../../../core/common/widgets/outSide_registeration.dart';
+import '../../../../../core/utils/app_router.dart';
+import '../../../../../core/utils/asset_data.dart';
+import '../../../../../core/utils/styles.dart';
+
+class LoginViewBody extends StatelessWidget {
+  const LoginViewBody({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +44,7 @@ class SignInViewBody extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        'Sign Up for Free',
+                        'Login to Your Account',
                         style: Styles.textStyle20,
                       ),
                     ],
@@ -51,19 +52,7 @@ class SignInViewBody extends StatelessWidget {
                   const SizedBox(
                     height: 20,
                   ),
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width,
-                    child: CustomTextFormField(
-                      hint: 'username',
-                      icon: Icon(
-                        Icons.person,
-                        color: kPrimaryColor.withOpacity(0.5),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 12,
-                  ),
+
                   SizedBox(
                     width: MediaQuery.of(context).size.width,
                     child: CustomTextFormField(
@@ -126,16 +115,17 @@ class SignInViewBody extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(
-                    height: 15,
+                    height: 45,
                   ),
                   GestureDetector(
-                      onTap: () {
-                        GoRouter.of(context)
-                            .pushReplacement(AppRouter.logInRoute);
-                      },
-                      child: const Text('Already have an account ?')),
+                    onTap: () {
+                      GoRouter.of(context)
+                          .pushReplacement(AppRouter.signInRoute);
+                    },
+                    child: const Text('doesn\'t have an account ?'),
+                  ),
                   const SizedBox(
-                    height: 15,
+                    height: 45,
                   ),
                 ],
               ),
@@ -153,7 +143,7 @@ class SignInViewBody extends StatelessWidget {
                   width: MediaQuery.of(context).size.width * 0.35,
                   height: 55,
                   child: CustomButton(
-                    text: 'Sign in',
+                    text: 'Log in',
                     onPressed: () {},
                   ),
                 ),
