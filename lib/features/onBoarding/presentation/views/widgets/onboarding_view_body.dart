@@ -3,12 +3,10 @@ import 'package:foody/constants.dart';
 import 'package:foody/core/common/widgets/background_stack.dart';
 import 'package:foody/core/common/widgets/custom_button.dart';
 import 'package:foody/core/utils/app_router.dart';
-import 'package:foody/core/utils/asset_data.dart';
 import 'package:foody/core/utils/styles.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../data/onBoarding_model.dart';
-import 'first_onBorad.dart';
 
 class OnBoardingViewBody extends StatelessWidget {
   const OnBoardingViewBody({super.key});
@@ -30,7 +28,7 @@ class OnBoadrdingPageView extends StatefulWidget {
 
 class _OnBoadrdingPageViewState extends State<OnBoadrdingPageView> {
   int currentIndex = 0;
-  PageController _controller = PageController(initialPage: 0);
+  final PageController _controller = PageController(initialPage: 0);
 
   @override
   void dispose() {
