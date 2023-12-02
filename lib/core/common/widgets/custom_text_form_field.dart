@@ -12,8 +12,10 @@ class CustomTextFormField extends StatefulWidget {
       this.icon,
       this.color,
       this.enabled,
-      this.isPassword = false});
+      this.isPassword = false,
+      this.keyboardType});
   final TextEditingController? controller;
+  final TextInputType? keyboardType;
   final String hint;
   final int maxLines;
   final void Function(String?)? onSaved;
@@ -32,7 +34,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
   @override
   Widget build(BuildContext context) {
     bool isUername = false;
-    widget.hint == 'User Name' ? isUername = true : false;
+    widget.hint == 'username' ? isUername = true : false;
     return TextFormField(
       onTapOutside: (event) {
         FocusManager.instance.primaryFocus?.unfocus();
@@ -54,6 +56,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
         }
       },
       maxLines: widget.maxLines,
+      keyboardType: widget.keyboardType,
       decoration: InputDecoration(
         suffixIcon: widget.isPassword
             ? GestureDetector(

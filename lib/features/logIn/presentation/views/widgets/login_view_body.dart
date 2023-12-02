@@ -9,9 +9,29 @@ import '../../../../../core/common/widgets/outSide_registeration.dart';
 import '../../../../../core/utils/app_router.dart';
 import '../../../../../core/utils/asset_data.dart';
 import '../../../../../core/utils/styles.dart';
+import 'login_email_field.dart';
+import 'login_password_field.dart';
 
-class LoginViewBody extends StatelessWidget {
+class LoginViewBody extends StatefulWidget {
   const LoginViewBody({super.key});
+
+  @override
+  State<LoginViewBody> createState() => _LoginViewBodyState();
+}
+
+class _LoginViewBodyState extends State<LoginViewBody> {
+  final GlobalKey<FormState> formKey = GlobalKey();
+  AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
+  final TextEditingController _controller = TextEditingController();
+  final TextEditingController _controller2 = TextEditingController();
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    _controller.dispose();
+    _controller2.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,113 +41,104 @@ class LoginViewBody extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: kHorizontalPadding),
             child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  const SizedBox(
-                    height: 50,
-                  ),
-                  Image.asset(
-                    AssetData.logo,
-                    width: MediaQuery.of(context).size.width * 0.35,
-                  ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  SvgPicture.asset(
-                    AssetData.appName,
-                    width: MediaQuery.of(context).size.width * 0.35,
-                  ),
-                  const SizedBox(
-                    height: 30,
-                  ),
-                  const Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        'Login to Your Account',
-                        style: Styles.textStyle20,
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
+              child: Form(
+                key: formKey,
+                autovalidateMode: autovalidateMode,
+                child: Column(
+                  children: [
+                    const SizedBox(
+                      height: 50,
+                    ),
+                    Image.asset(
+                      AssetData.logo,
+                      width: MediaQuery.of(context).size.width * 0.35,
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    SvgPicture.asset(
+                      AssetData.appName,
+                      width: MediaQuery.of(context).size.width * 0.35,
+                    ),
+                    const SizedBox(
+                      height: 30,
+                    ),
+                    const Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Login to Your Account',
+                          style: Styles.textStyle20,
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
 
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width,
-                    child: CustomTextFormField(
-                      hint: 'Email',
-                      icon: Icon(
-                        Icons.email,
-                        color: kPrimaryColor.withOpacity(0.5),
+                    LoginEmailField(controller: _controller),
+                    const SizedBox(
+                      height: 12,
+                    ),
+                    LoginPasswordField(
+                      controller: _controller2,
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    const Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Or Continue with',
+                          style: Styles.textStyle15,
+                        ),
+                      ],
+                    ),
+                    // ignore: prefer_const_constructors
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        SizedBox(
+                          height: 50,
+                          child: OutsideRegisteration(
+                            name: '  Google  ',
+                            image: AssetData.google,
+                            onPressed: () {},
+                          ),
+                        ),
+                        SizedBox(
+                          height: 50,
+                          child: OutsideRegisteration(
+                            name: 'Facebook',
+                            image: AssetData.facebook,
+                            onPressed: () {},
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 45,
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        GoRouter.of(context)
+                            .pushReplacement(AppRouter.signInRoute);
+                      },
+                      child: Text(
+                        'doesn\'t have an account ?',
+                        style:
+                            Styles.textStyle15.copyWith(color: kPrimaryColor),
                       ),
                     ),
-                  ),
-                  const SizedBox(
-                    height: 12,
-                  ),
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width,
-                    child: CustomTextFormField(
-                      isPassword: true,
-                      hint: 'Password',
-                      icon: Icon(
-                        Icons.lock,
-                        color: kPrimaryColor.withOpacity(0.5),
-                      ),
+                    const SizedBox(
+                      height: 45,
                     ),
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  const Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        'Or Continue with',
-                        style: Styles.textStyle15,
-                      ),
-                    ],
-                  ),
-                  // ignore: prefer_const_constructors
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      SizedBox(
-                        height: 50,
-                        child: OutsideRegisteration(
-                          name: '  Google  ',
-                          image: AssetData.google,
-                          onPressed: () {},
-                        ),
-                      ),
-                      SizedBox(
-                        height: 50,
-                        child: OutsideRegisteration(
-                          name: 'Facebook',
-                          image: AssetData.facebook,
-                          onPressed: () {},
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 45,
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      GoRouter.of(context)
-                          .pushReplacement(AppRouter.signInRoute);
-                    },
-                    child: const Text('doesn\'t have an account ?'),
-                  ),
-                  const SizedBox(
-                    height: 45,
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),
@@ -144,7 +155,12 @@ class LoginViewBody extends StatelessWidget {
                   height: 55,
                   child: CustomButton(
                     text: 'Log in',
-                    onPressed: () {},
+                    onPressed: () {
+                      if (formKey.currentState!.validate()) {
+                      } else {
+                        autovalidateMode = AutovalidateMode.always;
+                      }
+                    },
                   ),
                 ),
               ),
