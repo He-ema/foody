@@ -1,3 +1,4 @@
+import 'package:foody/features/OTP/presentation/views/otp_view.dart';
 import 'package:foody/features/info/presentation/views/info_view.dart';
 import 'package:foody/features/logIn/presentation/views/login_view.dart';
 import 'package:foody/features/onBoarding/presentation/views/onBoarding_view.dart';
@@ -11,6 +12,7 @@ abstract class AppRouter {
   static const signInRoute = '/SignIn';
   static const logInRoute = '/LogIn';
   static const infoRoute = '/InfoView';
+  static const otpRoute = '/otp';
 
   static final router = GoRouter(
     routes: [
@@ -33,6 +35,10 @@ abstract class AppRouter {
       GoRoute(
         path: infoRoute,
         builder: (context, state) => const InfoView(),
+      ),
+      GoRoute(
+        path: otpRoute,
+        builder: (context, state) => const OTPView(),
       ),
     ],
   );

@@ -12,6 +12,7 @@ class SignInView extends StatelessWidget {
       backgroundColor: Theme.of(context).colorScheme.background,
       body: const BackgroundStack(
         body: SignInViewBody(),
+        isBig: false,
       ),
     );
   }

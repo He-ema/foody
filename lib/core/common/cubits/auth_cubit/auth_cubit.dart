@@ -12,6 +12,7 @@ class AuthCubit extends Cubit<AuthState> {
   bool signedWithGoogle = true;
   bool verified = false;
   String? email;
+  String? name;
   final CollectionReference _users =
       FirebaseFirestore.instance.collection(kUsersCollectionReference);
 
@@ -114,6 +115,7 @@ class AuthCubit extends Cubit<AuthState> {
       });
       email = googleUser.email;
       signedWithGoogle = true;
+      name = googleUser.displayName;
 
       emit(AuthSuccess());
       return await FirebaseAuth.instance.signInWithCredential(credential);
@@ -138,7 +140,29 @@ class AuthCubit extends Cubit<AuthState> {
         kImage: image ??
             'https://firebasestorage.googleapis.com/v0/b/food-5f010.appspot.com/o/avatar.png?alt=media&token=76a28738-9cfb-44e2-8113-dd4549002466',
         kVerified: verified,
+        kPhone: '?',
       });
+    } catch (e) {
+      print(e.toString());
+      emit(AuthFailure(
+          erroHeader: 'Error',
+          errorMessage: 'Error creating user , try again'));
+    }
+  }
+
+  Future<void> addExtraData({
+    required String firstName,
+    required String secondName,
+    required String phone,
+  }) async {
+    emit(AuthLoading());
+    try {
+      await _users.doc(email).update({
+        kFname: firstName,
+        kSname: secondName,
+        kPhone: phone,
+      });
+      emit(AuthSuccess());
     } catch (e) {
       emit(AuthFailure(
           erroHeader: 'Error',
