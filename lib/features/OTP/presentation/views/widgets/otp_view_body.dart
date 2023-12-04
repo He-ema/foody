@@ -33,8 +33,8 @@ class _OTPViewBodyState extends State<OTPViewBody> {
     // TODO: implement initState
     super.initState();
     myauth.setConfig(
-        appEmail: "Laza@gmail.com",
-        appName: "Laza",
+        appEmail: "FOODY@gmail.com",
+        appName: "Food",
         userEmail: BlocProvider.of<AuthCubit>(context).email,
         otpLength: 4,
         otpType: OTPType.digitsOnly);
