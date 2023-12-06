@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:foody/constants.dart';
-import 'package:foody/core/common/custom_icon.dart';
 import 'package:foody/core/utils/styles.dart';
 import 'package:foody/features/home/presentation/views/widgets/auto_slidable_cards.dart';
 
 import 'home_search_area.dart';
-import 'home_text_field.dart';
 import 'notification_icon.dart';
 
 class HomeViewBody extends StatelessWidget {
@@ -15,6 +13,7 @@ class HomeViewBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CustomScrollView(
+      physics: NeverScrollableScrollPhysics(),
       slivers: [
         SliverToBoxAdapter(
           child: Column(
@@ -50,10 +49,10 @@ class HomeViewBody extends StatelessWidget {
           child: MasonryGridView.builder(
             padding: EdgeInsets.zero,
             itemCount: 10,
-            gridDelegate: SliverSimpleGridDelegateWithFixedCrossAxisCount(
+            gridDelegate: const SliverSimpleGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2),
             itemBuilder: (context, index) => Container(
-              margin: EdgeInsets.all(10),
+              margin: const EdgeInsets.all(10),
               color: Colors.grey,
               height: 50,
             ),

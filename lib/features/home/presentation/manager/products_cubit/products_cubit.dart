@@ -13,8 +13,12 @@ class ProductsCubit extends Cubit<ProductsState> {
     var result = await homeRepo.getAllProducts();
     result.fold((failure) {
       emit(ProductsFailure(failure.errorMessage));
+      print('============================================');
+      print(failure.errorMessage.toString());
     }, (products) {
       emit(ProductsSuccess(products));
+      print('============================================');
+      print(products.length);
     });
   }
 }
