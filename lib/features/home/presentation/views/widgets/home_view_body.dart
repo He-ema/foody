@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:foody/constants.dart';
+import 'package:foody/core/utils/styles.dart';
+import 'package:foody/features/home/presentation/manager/products_cubit/products_cubit.dart';
 import 'package:foody/features/home/presentation/views/widgets/auto_slidable_cards.dart';
+import 'package:foody/features/home/presentation/views/widgets/products_grid_view.dart';
 import 'my_app_bar.dart';
 
 class HomeViewBody extends StatelessWidget {
@@ -8,44 +13,32 @@ class HomeViewBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CustomScrollView(
-      slivers: [
-        const MyAppBar(),
-        SliverToBoxAdapter(
-          child: AutoSlidableCards(),
-        ),
-        SliverGrid.builder(
-          itemCount: 200,
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2, //number of columns on the screen
-            childAspectRatio: 1.1, // نسبىة العرض للطول
-            // crossAxisSpacing: 10, // spacing between columns
-            mainAxisSpacing: 10,
-          ),
-          itemBuilder: (context, index) {
-            return Container(
-              height: 100,
-              color: Colors.red,
-              margin: EdgeInsets.all(5),
-            );
-          },
-        ),
-        // SliverFillRemaining(
-        //   child: MasonryGridView.builder(
-        //     padding: EdgeInsets.zero,
-        //     physics: const NeverScrollableScrollPhysics(),
-        //     itemCount: 200,
-        //     gridDelegate: const SliverSimpleGridDelegateWithFixedCrossAxisCount(
-        //         crossAxisCount: 2),
-        //     itemBuilder: (context, index) => Container(
-        //       margin: const EdgeInsets.all(10),
-        //       color: Colors.grey,
-        //       height: 50,
-        //       child: Text(index.toString()),
-        //     ),
-        //   ),
-        // ),
-      ],
+    return BlocBuilder<ProductsCubit, ProductsState>(
+      builder: (context, state) {
+        if (state is ProductsSuccess) {
+          return CustomScrollView(
+            slivers: [
+              const MyAppBar(),
+              SliverToBoxAdapter(
+                child: AutoSlidableCards(),
+              ),
+              ProductsGridView(
+                state: state,
+              )
+            ],
+          );
+        } else if (state is ProductsFailure) {
+          return Center(
+            child: Text(state.errorMessage, style: Styles.textStyle25),
+          );
+        } else {
+          return const Center(
+            child: SpinKitWave(
+              color: kPrimaryColor,
+            ),
+          );
+        }
+      },
     );
   }
 }

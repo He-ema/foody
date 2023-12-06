@@ -1,4 +1,5 @@
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
+import 'package:dio/dio.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -6,6 +7,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foody/core/common/cubits/auth_cubit/auth_cubit.dart';
 import 'package:foody/core/theme/theme_cubit/theme_cubit.dart';
 import 'package:foody/core/utils/app_router.dart';
+import 'package:foody/features/home/data/repo/home_repo_implementation.dart';
+import 'package:foody/features/home/data/services.dart/api_service.dart';
+import 'package:foody/features/home/presentation/manager/products_cubit/products_cubit.dart';
+import 'package:foody/simple_bloc_observer.dart';
 
 import 'firebase_options.dart';
 
@@ -19,6 +24,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  Bloc.observer = SimpleBlocObserver();
   runApp(MultiBlocProvider(
     providers: [
       BlocProvider(
@@ -26,6 +32,15 @@ void main() async {
       ),
       BlocProvider(
         create: (context) => AuthCubit(),
+      ),
+      BlocProvider(
+        create: (context) => ProductsCubit(
+          HomeRepoImplementation(
+            ApiService(
+              Dio(),
+            ),
+          ),
+        )..getAllHomeProducts(),
       ),
     ],
     child: const MyApp(),
