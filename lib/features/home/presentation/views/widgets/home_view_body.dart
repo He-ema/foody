@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:foody/constants.dart';
 import 'package:foody/core/common/custom_icon.dart';
 import 'package:foody/core/utils/styles.dart';
 import 'package:foody/features/home/presentation/views/widgets/auto_slidable_cards.dart';
 
+import 'home_search_area.dart';
 import 'home_text_field.dart';
 import 'notification_icon.dart';
 
@@ -12,43 +14,51 @@ class HomeViewBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        const SizedBox(
-          height: 50,
-        ),
-        const Padding(
-          padding: EdgeInsets.symmetric(horizontal: kHorizontalPadding),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return CustomScrollView(
+      slivers: [
+        SliverToBoxAdapter(
+          child: Column(
             children: [
-              Text(
-                'Find Your \nfavourite Food',
-                style: Styles.textStyle30,
+              const SizedBox(
+                height: 50,
               ),
-              NotificationIcon()
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: kHorizontalPadding),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Find Your \nfavourite Food',
+                      style: Styles.textStyle30,
+                    ),
+                    NotificationIcon()
+                  ],
+                ),
+              ),
+              const SizedBox(
+                height: 18,
+              ),
+              const HomeSearchArea(),
+              const SizedBox(
+                height: 16,
+              ),
+              AutoSlidableCards(),
             ],
           ),
         ),
-        const SizedBox(
-          height: 18,
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: kHorizontalPadding),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              HomeTextField(),
-              CustomIcon(
-                icon: Icons.filter_list,
-              )
-            ],
+        SliverFillRemaining(
+          child: MasonryGridView.builder(
+            padding: EdgeInsets.zero,
+            itemCount: 10,
+            gridDelegate: SliverSimpleGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2),
+            itemBuilder: (context, index) => Container(
+              margin: EdgeInsets.all(10),
+              color: Colors.grey,
+              height: 50,
+            ),
           ),
         ),
-        SizedBox(
-          height: 16,
-        ),
-        AutoSlidableCards(),
       ],
     );
   }
