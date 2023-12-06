@@ -4,8 +4,9 @@ import 'package:go_router/go_router.dart';
 import '../../constants.dart';
 
 class CustomIcon extends StatelessWidget {
-  const CustomIcon({super.key, this.onTap});
+  const CustomIcon({super.key, this.onTap, this.icon});
   final void Function()? onTap;
+  final IconData? icon;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -19,8 +20,8 @@ class CustomIcon extends StatelessWidget {
           color: kPrimaryColor.withOpacity(0.1),
           borderRadius: BorderRadius.circular(15),
         ),
-        child: const Icon(
-          Icons.arrow_back_ios_new,
+        child: Icon(
+          icon ?? Icons.arrow_back_ios_new,
           color: kPrimaryColor,
           size: 30,
         ),

@@ -7,8 +7,9 @@ class HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: BackgroundStack(
+    return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.background,
+      body: const BackgroundStack(
         body: HomeViewBody(),
         isBig: false,
       ),
