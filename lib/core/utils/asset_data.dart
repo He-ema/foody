@@ -15,4 +15,8 @@ abstract class AssetData {
   static const String facebook = 'assets/images/facebook.png';
   static const String secondillustration = 'assets/images/Illustration.png';
   static const String congrats = 'assets/images/congrats.png';
+  static const String advertise = 'assets/images/advertise.png';
+  static const String advertise1 = 'assets/images/advertise1.png';
+  static const String advertise2 = 'assets/images/advertise2.png';
+  static const String advertise3 = 'assets/images/advertise3.png';
 }
