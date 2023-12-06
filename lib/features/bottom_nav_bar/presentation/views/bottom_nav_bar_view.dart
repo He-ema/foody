@@ -37,48 +37,46 @@ class _BottomNavigationBarViewState extends State<BottomNavigationBarView> {
 
   @override
   Widget build(BuildContext context) {
-    return ThemeSwitchingArea(
-      child: Scaffold(
-        backgroundColor: Theme.of(context).colorScheme.background,
-        body: views.elementAt(currentIndex),
-        bottomNavigationBar: GNav(
-          onTabChange: (value) {
-            currentIndex = value;
-            setState(() {});
-          },
-          tabBackgroundColor: kPrimaryColor.withOpacity(0.1),
-          activeColor: kPrimaryColor,
-          tabMargin: const EdgeInsets.all(10),
-          gap: 8,
-          color: kPrimaryColor.withOpacity(0.3),
-          tabBorderRadius: 15,
-          backgroundColor: Theme.of(context).colorScheme.primary,
-          padding: const EdgeInsets.all(40),
-          curve: Curves.easeInQuart,
-          // ignore: prefer_const_literals_to_create_immutables
-          tabs: [
-            const GButton(
-              icon: Icons.home,
-              text: 'Home',
-              padding: EdgeInsets.all(15),
-            ),
-            const GButton(
-              icon: Icons.person,
-              text: 'Profile',
-              padding: EdgeInsets.all(15),
-            ),
-            const GButton(
-              icon: Icons.shopping_cart,
-              text: 'Cart',
-              padding: EdgeInsets.all(15),
-            ),
-            const GButton(
-              icon: Icons.wallet,
-              text: 'Payment',
-              padding: EdgeInsets.all(15),
-            ),
-          ],
-        ),
+    return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.background,
+      body: views.elementAt(currentIndex),
+      bottomNavigationBar: GNav(
+        onTabChange: (value) {
+          currentIndex = value;
+          setState(() {});
+        },
+        tabBackgroundColor: kPrimaryColor.withOpacity(0.1),
+        activeColor: kPrimaryColor,
+        tabMargin: const EdgeInsets.all(10),
+        gap: 8,
+        color: kPrimaryColor.withOpacity(0.3),
+        tabBorderRadius: 15,
+        backgroundColor: Theme.of(context).colorScheme.primary,
+        padding: const EdgeInsets.all(40),
+        curve: Curves.easeInQuart,
+        // ignore: prefer_const_literals_to_create_immutables
+        tabs: [
+          const GButton(
+            icon: Icons.home,
+            text: 'Home',
+            padding: EdgeInsets.all(15),
+          ),
+          const GButton(
+            icon: Icons.person,
+            text: 'Profile',
+            padding: EdgeInsets.all(15),
+          ),
+          const GButton(
+            icon: Icons.shopping_cart,
+            text: 'Cart',
+            padding: EdgeInsets.all(15),
+          ),
+          const GButton(
+            icon: Icons.wallet,
+            text: 'Payment',
+            padding: EdgeInsets.all(15),
+          ),
+        ],
       ),
     );
   }
