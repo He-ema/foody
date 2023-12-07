@@ -3,14 +3,14 @@ import 'package:foody/core/common/widgets/background_stack.dart';
 import 'package:foody/features/home/presentation/views/widgets/home_view_body.dart';
 
 class HomeView extends StatelessWidget {
-  const HomeView({super.key});
-
+  const HomeView({super.key, required this.email});
+  final String email;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
-      body: const BackgroundStack(
-        body: HomeViewBody(),
+      body: BackgroundStack(
+        body: HomeViewBody(email: email),
         isBig: false,
       ),
     );

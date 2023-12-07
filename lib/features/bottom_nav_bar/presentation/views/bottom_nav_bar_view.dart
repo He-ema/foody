@@ -31,7 +31,7 @@ class _BottomNavigationBarViewState extends State<BottomNavigationBarView> {
     // TODO: implement initState
     super.initState();
     views = [
-      const HomeView(),
+      HomeView(email: BlocProvider.of<AuthCubit>(context).email!),
       BlocProvider(
         create: (context) => ProfileCubit()
           ..getUserData(BlocProvider.of<AuthCubit>(context).email!),

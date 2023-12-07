@@ -10,8 +10,8 @@ import 'home_loading_view.dart';
 import 'my_app_bar.dart';
 
 class HomeViewBody extends StatelessWidget {
-  const HomeViewBody({super.key});
-
+  const HomeViewBody({super.key, required this.email});
+  final String email;
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ProductsCubit, ProductsState>(
@@ -24,6 +24,7 @@ class HomeViewBody extends StatelessWidget {
                 child: AutoSlidableCards(),
               ),
               ProductsGridView(
+                email: email,
                 state: state,
               )
             ],

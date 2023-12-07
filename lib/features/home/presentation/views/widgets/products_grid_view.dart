@@ -7,8 +7,10 @@ class ProductsGridView extends StatelessWidget {
   const ProductsGridView({
     super.key,
     required this.state,
+    required this.email,
   });
   final ProductsSuccess state;
+  final String email;
   @override
   Widget build(BuildContext context) {
     return SliverGrid.builder(
@@ -20,7 +22,11 @@ class ProductsGridView extends StatelessWidget {
         mainAxisSpacing: 10,
       ),
       itemBuilder: (context, index) {
-        return GridItem(state: state, index: index);
+        return GridItem(
+          state: state,
+          index: index,
+          email: email,
+        );
       },
     );
   }
