@@ -1,12 +1,14 @@
-import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:foody/constants.dart';
 import 'package:foody/core/common/cubits/auth_cubit/auth_cubit.dart';
+import 'package:foody/features/chat/presentation/views/chat_view.dart';
 import 'package:foody/features/home/presentation/views/home_view.dart';
 import 'package:foody/features/profile/presentation/manager/profile_cubit/profile_cubit.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 
+import '../../../cart/presentation/views/cart_view.dart';
 import '../../../profile/presentation/views/profile_view.dart';
 
 class BottomNavigationBarView extends StatefulWidget {
@@ -35,8 +37,8 @@ class _BottomNavigationBarViewState extends State<BottomNavigationBarView> {
           ..getUserData(BlocProvider.of<AuthCubit>(context).email!),
         child: ProfileView(email: BlocProvider.of<AuthCubit>(context).email!),
       ),
-      Container(),
-      Container(),
+      CartView(),
+      ChatView(),
     ];
 
     AuthCubit().close();
@@ -79,8 +81,8 @@ class _BottomNavigationBarViewState extends State<BottomNavigationBarView> {
             padding: EdgeInsets.all(15),
           ),
           const GButton(
-            icon: Icons.wallet,
-            text: 'Payment',
+            icon: FontAwesomeIcons.comment,
+            text: 'Chat',
             padding: EdgeInsets.all(15),
           ),
         ],

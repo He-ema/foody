@@ -11,14 +11,15 @@ class HomeSearchArea extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Padding(
-      padding: EdgeInsets.symmetric(horizontal: kHorizontalPadding),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: kHorizontalPadding),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          HomeTextField(),
+          const HomeTextField(),
           CustomIcon(
             icon: Icons.filter_list,
+            onTap: () {},
           )
         ],
       ),

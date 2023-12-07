@@ -9,12 +9,13 @@ class NotificationIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Stack(
+    return Stack(
       children: [
         CustomIcon(
           icon: Icons.notifications_none_outlined,
+          onTap: () {},
         ),
-        Positioned(
+        const Positioned(
             top: 12,
             right: 13,
             child: CircleAvatar(
