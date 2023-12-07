@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:foody/constants.dart';
 import 'package:foody/core/common/cubits/auth_cubit/auth_cubit.dart';
+import 'package:foody/features/cart/presentation/manager/cart_cubit/cart_cubit.dart';
 import 'package:foody/features/chat/presentation/views/chat_view.dart';
 import 'package:foody/features/home/presentation/views/home_view.dart';
 import 'package:foody/features/profile/presentation/manager/profile_cubit/profile_cubit.dart';
@@ -37,7 +38,11 @@ class _BottomNavigationBarViewState extends State<BottomNavigationBarView> {
           ..getUserData(BlocProvider.of<AuthCubit>(context).email!),
         child: ProfileView(email: BlocProvider.of<AuthCubit>(context).email!),
       ),
-      CartView(),
+      BlocProvider(
+        create: (context) => CartCubit()
+          ..getAllCartItems(email: BlocProvider.of<AuthCubit>(context).email!),
+        child: CartView(email: BlocProvider.of<AuthCubit>(context).email!),
+      ),
       ChatView(),
     ];
 

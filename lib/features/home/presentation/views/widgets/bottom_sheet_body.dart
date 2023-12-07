@@ -146,6 +146,7 @@ class _BottomSheetBodyState extends State<BottomSheetBody> {
       kImage: widget.state.products[widget.index].image,
       kPrice: widget.index + 1 * 123 / 4,
       kQuantity: 1,
+      kId: widget.state.products[widget.index].id.toString(),
     });
     isLoading = false;
     setState(() {});
