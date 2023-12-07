@@ -4,7 +4,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foody/constants.dart';
 import 'package:foody/core/common/cubits/auth_cubit/auth_cubit.dart';
 import 'package:foody/features/home/presentation/views/home_view.dart';
+import 'package:foody/features/profile/presentation/manager/profile_cubit/profile_cubit.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+
+import '../../../profile/presentation/views/profile_view.dart';
 
 class BottomNavigationBarView extends StatefulWidget {
   const BottomNavigationBarView({
@@ -20,18 +23,22 @@ class _BottomNavigationBarViewState extends State<BottomNavigationBarView> {
   int currentIndex = 0;
 
   late List views;
-  late String email;
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     views = [
       const HomeView(),
-      Container(),
+      BlocProvider(
+        create: (context) => ProfileCubit()
+          ..getUserData(BlocProvider.of<AuthCubit>(context).email!),
+        child: ProfileView(email: BlocProvider.of<AuthCubit>(context).email!),
+      ),
       Container(),
       Container(),
     ];
-    email = BlocProvider.of<AuthCubit>(context).email!;
+
     AuthCubit().close();
   }
 

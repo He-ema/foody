@@ -3,13 +3,19 @@ import 'package:foody/constants.dart';
 import 'package:foody/core/utils/styles.dart';
 
 class CustomButton extends StatelessWidget {
-  const CustomButton({super.key, required this.text, required this.onPressed});
+  const CustomButton(
+      {super.key,
+      required this.text,
+      required this.onPressed,
+      this.enabled = true});
   final String text;
+  final bool enabled;
   final void Function() onPressed;
   @override
   Widget build(BuildContext context) {
     return MaterialButton(
-      onPressed: onPressed,
+      disabledColor: Colors.grey,
+      onPressed: enabled ? onPressed : null,
       color: kPrimaryColor,
       height: 55,
       shape: RoundedRectangleBorder(

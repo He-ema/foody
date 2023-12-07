@@ -78,7 +78,9 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
         border: buildBorder(kPrimaryColor),
         hintText: widget.hint,
         hintStyle: const TextStyle(color: Colors.grey),
+
         enabledBorder: buildBorder(kPrimaryColor),
+        // disabledBorder: buildBorder(Colors.black),
         focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(16),
             borderSide: const BorderSide(

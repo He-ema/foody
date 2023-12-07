@@ -6,6 +6,7 @@ import 'package:foody/core/utils/styles.dart';
 import 'package:foody/features/home/presentation/manager/products_cubit/products_cubit.dart';
 import 'package:foody/features/home/presentation/views/widgets/auto_slidable_cards.dart';
 import 'package:foody/features/home/presentation/views/widgets/products_grid_view.dart';
+import 'home_loading_view.dart';
 import 'my_app_bar.dart';
 
 class HomeViewBody extends StatelessWidget {
@@ -32,11 +33,7 @@ class HomeViewBody extends StatelessWidget {
             child: Text(state.errorMessage, style: Styles.textStyle25),
           );
         } else {
-          return const Center(
-            child: SpinKitWave(
-              color: kPrimaryColor,
-            ),
-          );
+          return const HomeLoadingView();
         }
       },
     );
