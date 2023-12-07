@@ -1,7 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:foody/core/utils/styles.dart';
+import 'package:foody/features/home/presentation/manager/item_handler_cubit/item_handler_cubit.dart';
 
 import '../../../../../constants.dart';
 import '../../../../../core/common/widgets/custom_button.dart';
@@ -30,7 +32,15 @@ class GridItem extends StatelessWidget {
                   topRight: Radius.circular(15), topLeft: Radius.circular(15))),
           context: context,
           builder: (context) {
-            return BottomSheetBody(state: state, index: index);
+            return BlocProvider(
+              create: (context) => ItemHandlerCubit()
+                ..checkExistence(email: email, id: state.products[index].id!),
+              child: BottomSheetBody(
+                state: state,
+                index: index,
+                email: email,
+              ),
+            );
           },
         );
       },

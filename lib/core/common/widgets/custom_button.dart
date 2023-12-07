@@ -7,10 +7,12 @@ class CustomButton extends StatelessWidget {
       {super.key,
       required this.text,
       required this.onPressed,
-      this.enabled = true});
+      this.enabled = true,
+      this.loading = false});
   final String text;
   final bool enabled;
   final void Function() onPressed;
+  final bool loading;
   @override
   Widget build(BuildContext context) {
     return MaterialButton(
@@ -21,10 +23,12 @@ class CustomButton extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(15),
       ),
-      child: Text(
-        text,
-        style: Styles.textStyle15.copyWith(color: Colors.white),
-      ),
+      child: loading
+          ? const CircularProgressIndicator()
+          : Text(
+              text,
+              style: Styles.textStyle15.copyWith(color: Colors.white),
+            ),
     );
   }
 }

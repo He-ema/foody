@@ -31,8 +31,8 @@ class _AutoSlidableCardsState extends State<AutoSlidableCards> {
                   autoPlay: true,
                   enlargeCenterPage: true,
                   height: 200,
-                  autoPlayAnimationDuration: Duration(milliseconds: 800),
-                  autoPlayInterval: Duration(seconds: 3),
+                  autoPlayAnimationDuration: const Duration(milliseconds: 800),
+                  autoPlayInterval: const Duration(seconds: 2),
                   enableInfiniteScroll: true,
                   aspectRatio: 2,
                   onPageChanged: (index, reason) {
