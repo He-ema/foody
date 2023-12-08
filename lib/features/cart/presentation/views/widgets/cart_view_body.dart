@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:foody/constants.dart';
+import 'package:foody/core/utils/asset_data.dart';
 import 'package:foody/core/utils/styles.dart';
 import 'package:foody/features/cart/presentation/manager/cart_cubit/cart_cubit.dart';
 import 'package:foody/features/cart/presentation/views/widgets/product_container.dart';
@@ -29,51 +30,63 @@ class _CartViewBodyState extends State<CartViewBody> {
           if (state.cartItems.isEmpty) {
             return const EmptyCartView();
           } else {
-            return Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: kHorizontalPadding),
-              child: Column(
-                children: [
-                  const SizedBox(
-                    height: 50,
-                  ),
-                  const Text(
-                    'Cart',
-                    style: Styles.textStyle30,
-                  ),
-                  const Divider(),
-                  Expanded(
-                    child: AnimatedList(
-                      key: _listKey,
-                      initialItemCount: state.cartItems.length,
-                      itemBuilder: (context, index, animation) => Padding(
-                        padding: const EdgeInsets.only(bottom: 20),
-                        child: Slidable(
-                          startActionPane: ActionPane(
-                              motion: const StretchMotion(),
-                              children: [
-                                SlidableAction(
-                                  onPressed: (context) {
-                                    deleteListItem(
-                                        index, context, state, widget.email);
-                                  },
-                                  icon: Icons.delete,
-                                  label: 'Delete',
-                                  backgroundColor: kPrimaryColor,
-                                  padding: const EdgeInsets.all(10),
-                                  borderRadius: BorderRadius.circular(15),
-                                ),
-                              ]),
-                          child: ProductContainer(
-                            index: index,
-                            state: state,
+            return Stack(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: kHorizontalPadding),
+                  child: Column(
+                    children: [
+                      const SizedBox(
+                        height: 50,
+                      ),
+                      const Text(
+                        'Cart',
+                        style: Styles.textStyle30,
+                      ),
+                      const Divider(),
+                      Expanded(
+                        child: AnimatedList(
+                          key: _listKey,
+                          initialItemCount: state.cartItems.length,
+                          itemBuilder: (context, index, animation) => Padding(
+                            padding: const EdgeInsets.only(bottom: 20),
+                            child: Slidable(
+                              startActionPane: ActionPane(
+                                  motion: const StretchMotion(),
+                                  children: [
+                                    SlidableAction(
+                                      onPressed: (context) {
+                                        deleteListItem(index, context, state,
+                                            widget.email);
+                                      },
+                                      icon: Icons.delete,
+                                      label: 'Delete',
+                                      backgroundColor: kPrimaryColor,
+                                      padding: const EdgeInsets.all(10),
+                                      borderRadius: BorderRadius.circular(15),
+                                    ),
+                                  ]),
+                              child: ProductContainer(
+                                index: index,
+                                state: state,
+                              ),
+                            ),
                           ),
                         ),
-                      ),
-                    ),
-                  )
-                ],
-              ),
+                      )
+                    ],
+                  ),
+                ),
+                Positioned(
+                  bottom: 0,
+                  left: 0,
+                  right: 0,
+                  child: Container(
+                    child: Image.asset(AssetData.priceInfo),
+                  ),
+                )
+              ],
             );
           }
         } else if (state is CartFailure) {
