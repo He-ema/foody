@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -6,6 +7,9 @@ import 'package:foody/constants.dart';
 import 'package:foody/core/utils/styles.dart';
 import 'package:foody/features/cart/presentation/manager/cart_cubit/cart_cubit.dart';
 import 'package:foody/features/cart/presentation/views/widgets/product_container.dart';
+import 'package:lottie/lottie.dart';
+
+import 'empty_cart_view.dart';
 
 class CartViewBody extends StatefulWidget {
   const CartViewBody({super.key, required this.email});
@@ -22,44 +26,56 @@ class _CartViewBodyState extends State<CartViewBody> {
     return BlocBuilder<CartCubit, CartState>(
       builder: (context, state) {
         if (state is CartSuccess) {
-          return Padding(
-            padding: const EdgeInsets.symmetric(horizontal: kHorizontalPadding),
-            child: Column(
-              children: [
-                const SizedBox(
-                  height: 50,
-                ),
-                const Text(
-                  'Cart',
-                  style: Styles.textStyle30,
-                ),
-                const Divider(),
-                Expanded(
-                  child: AnimatedList(
-                    key: _listKey,
-                    initialItemCount: state.cartItems.length,
-                    itemBuilder: (context, index, animation) => Slidable(
-                      startActionPane:
-                          ActionPane(motion: StretchMotion(), children: [
-                        SlidableAction(
-                          onPressed: (context) {},
-                          icon: Icons.delete,
-                          label: 'Delete',
-                          backgroundColor: kPrimaryColor,
-                          padding: EdgeInsets.all(10),
-                          borderRadius: BorderRadius.circular(15),
+          if (state.cartItems.isEmpty) {
+            return const EmptyCartView();
+          } else {
+            return Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: kHorizontalPadding),
+              child: Column(
+                children: [
+                  const SizedBox(
+                    height: 50,
+                  ),
+                  const Text(
+                    'Cart',
+                    style: Styles.textStyle30,
+                  ),
+                  const Divider(),
+                  Expanded(
+                    child: AnimatedList(
+                      key: _listKey,
+                      initialItemCount: state.cartItems.length,
+                      itemBuilder: (context, index, animation) => Padding(
+                        padding: const EdgeInsets.only(bottom: 20),
+                        child: Slidable(
+                          startActionPane: ActionPane(
+                              motion: const StretchMotion(),
+                              children: [
+                                SlidableAction(
+                                  onPressed: (context) {
+                                    deleteListItem(
+                                        index, context, state, widget.email);
+                                  },
+                                  icon: Icons.delete,
+                                  label: 'Delete',
+                                  backgroundColor: kPrimaryColor,
+                                  padding: const EdgeInsets.all(10),
+                                  borderRadius: BorderRadius.circular(15),
+                                ),
+                              ]),
+                          child: ProductContainer(
+                            index: index,
+                            state: state,
+                          ),
                         ),
-                      ]),
-                      child: ProductContainer(
-                        index: index,
-                        state: state,
                       ),
                     ),
-                  ),
-                )
-              ],
-            ),
-          );
+                  )
+                ],
+              ),
+            );
+          }
         } else if (state is CartFailure) {
           return Center(
             child: Text(state.errorMessage),
@@ -69,6 +85,83 @@ class _CartViewBodyState extends State<CartViewBody> {
             child: CircularProgressIndicator(),
           );
         }
+      },
+    );
+  }
+
+  Future<void> removeAllFromList(CartSuccess state) async {
+    _listKey.currentState!.removeAllItems(
+      (context, animation) {
+        return SlideTransition(
+          position: animation.drive(
+              Tween(begin: const Offset(2, 0.0), end: const Offset(0.0, 0.0))
+                  .chain(CurveTween(curve: Curves.elasticInOut))),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(14),
+            child: Container(
+              margin: const EdgeInsets.only(bottom: 10),
+              width: MediaQuery.of(context).size.width * 0.75,
+              height: MediaQuery.of(context).size.height * 0.15,
+              decoration: BoxDecoration(
+                color: kPrimaryColor,
+                borderRadius: BorderRadius.circular(14),
+              ),
+              child: Center(
+                  child: Text(
+                'Success',
+                style: Styles.textStyle22.copyWith(color: Colors.white),
+              )),
+            ),
+          ),
+        );
+      },
+      duration: const Duration(milliseconds: 2000),
+    );
+    Future.delayed(const Duration(milliseconds: 2000), () {
+      state.cartItems.clear();
+    });
+  }
+
+  Future<void> deleteListItem(
+      int index, BuildContext context, CartSuccess state, String email) async {
+    CollectionReference favourite =
+        FirebaseFirestore.instance.collection(email + kCartCollectionReference);
+    String id = state.cartItems[index].id;
+    state.cartItems.removeAt(index);
+
+    _listKey.currentState!.removeItem(
+      index,
+      (context, animation) {
+        return SlideTransition(
+          position: animation.drive(
+            Tween(begin: const Offset(2, 0.0), end: const Offset(0.0, 0.0))
+                .chain(
+              CurveTween(curve: Curves.elasticInOut),
+            ),
+          ),
+          // sizeFactor: animation,
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(14),
+            child: Container(
+              margin: const EdgeInsets.only(bottom: 20),
+              width: MediaQuery.of(context).size.width * 0.75,
+              height: MediaQuery.of(context).size.height * 0.15,
+              decoration: BoxDecoration(
+                color: Colors.red.withOpacity(0.5),
+                borderRadius: BorderRadius.circular(14),
+              ),
+              child: const Center(child: Text('Deleted')),
+            ),
+          ),
+        );
+      },
+      duration: const Duration(milliseconds: 2000),
+    );
+    await favourite.doc(id.toString()).delete();
+    Future.delayed(
+      const Duration(seconds: 1),
+      () {
+        setState(() {});
       },
     );
   }

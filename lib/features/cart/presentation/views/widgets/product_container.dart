@@ -38,7 +38,8 @@ class ProductContainer extends StatelessWidget {
                 width: MediaQuery.of(context).size.width * 0.6,
                 child: Text(
                   state.cartItems[index].name,
-                  style: Styles.textStyle22,
+                  style:
+                      Styles.textStyle20.copyWith(fontWeight: FontWeight.w500),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),
