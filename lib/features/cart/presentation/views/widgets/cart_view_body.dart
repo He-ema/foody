@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -8,7 +7,6 @@ import 'package:foody/core/utils/asset_data.dart';
 import 'package:foody/core/utils/styles.dart';
 import 'package:foody/features/cart/presentation/manager/cart_cubit/cart_cubit.dart';
 import 'package:foody/features/cart/presentation/views/widgets/product_container.dart';
-import 'package:lottie/lottie.dart';
 
 import 'empty_cart_view.dart';
 

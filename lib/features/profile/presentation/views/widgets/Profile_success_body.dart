@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -21,7 +20,8 @@ class ProfileSuccessBody extends StatefulWidget {
   State<ProfileSuccessBody> createState() => _ProfileSuccessBodyState();
 }
 
-class _ProfileSuccessBodyState extends State<ProfileSuccessBody> {
+class _ProfileSuccessBodyState extends State<ProfileSuccessBody>
+    with SingleTickerProviderStateMixin {
   final TextEditingController _controller = TextEditingController();
 
   final TextEditingController _controller2 = TextEditingController();
@@ -29,6 +29,9 @@ class _ProfileSuccessBodyState extends State<ProfileSuccessBody> {
   final TextEditingController _controller3 = TextEditingController();
 
   final TextEditingController _controller4 = TextEditingController();
+
+  late AnimationController animationController;
+  late Animation<Offset> slidingAnimation;
 
   bool isLoading = false;
   bool isVisible = false;
@@ -41,6 +44,7 @@ class _ProfileSuccessBodyState extends State<ProfileSuccessBody> {
     _controller2.text = widget.state.user.secondName;
     _controller3.text = widget.state.user.email;
     _controller4.text = widget.state.user.phone;
+    initSlidingAnimation();
   }
 
   @override
@@ -51,6 +55,7 @@ class _ProfileSuccessBodyState extends State<ProfileSuccessBody> {
     _controller2.dispose();
     _controller3.dispose();
     _controller4.dispose();
+    animationController.dispose();
   }
 
   @override
@@ -70,27 +75,44 @@ class _ProfileSuccessBodyState extends State<ProfileSuccessBody> {
                   SizedBox(
                     height: MediaQuery.of(context).size.height * 0.15,
                   ),
-                  ImageArea(widget: widget),
+                  AnimatedBuilder(
+                    animation: slidingAnimation,
+                    builder: (context, child) => SlideTransition(
+                        position: slidingAnimation,
+                        child: ImageArea(widget: widget)),
+                  ),
                   const SizedBox(
                     height: 30,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.4,
-                        child: CustomTextFormField(
-                          hint: 'First name',
-                          controller: _controller,
-                          onChanged: onFieldDataChanged,
+                      AnimatedBuilder(
+                        animation: slidingAnimation,
+                        builder: (context, child) => SlideTransition(
+                          position: slidingAnimation,
+                          child: SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.4,
+                            child: CustomTextFormField(
+                              hint: 'First name',
+                              controller: _controller,
+                              onChanged: onFieldDataChanged,
+                            ),
+                          ),
                         ),
                       ),
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.4,
-                        child: CustomTextFormField(
-                          hint: 'Second name',
-                          controller: _controller2,
-                          onChanged: onFieldDataChanged,
+                      AnimatedBuilder(
+                        animation: slidingAnimation,
+                        builder: (context, child) => SlideTransition(
+                          position: slidingAnimation,
+                          child: SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.4,
+                            child: CustomTextFormField(
+                              hint: 'Second name',
+                              controller: _controller2,
+                              onChanged: onFieldDataChanged,
+                            ),
+                          ),
                         ),
                       ),
                     ],
@@ -100,11 +122,17 @@ class _ProfileSuccessBodyState extends State<ProfileSuccessBody> {
                   ),
                   SizedBox(
                     width: MediaQuery.of(context).size.width,
-                    child: CustomTextFormField(
-                      hint: 'Email',
-                      enabled: false,
-                      controller: _controller3,
-                      onChanged: onFieldDataChanged,
+                    child: AnimatedBuilder(
+                      animation: slidingAnimation,
+                      builder: (context, child) => SlideTransition(
+                        position: slidingAnimation,
+                        child: CustomTextFormField(
+                          hint: 'Email',
+                          enabled: false,
+                          controller: _controller3,
+                          onChanged: onFieldDataChanged,
+                        ),
+                      ),
                     ),
                   ),
                   const SizedBox(
@@ -112,10 +140,16 @@ class _ProfileSuccessBodyState extends State<ProfileSuccessBody> {
                   ),
                   SizedBox(
                     width: MediaQuery.of(context).size.width,
-                    child: CustomTextFormField(
-                      hint: 'Password',
-                      controller: _controller4,
-                      onChanged: onFieldDataChanged,
+                    child: AnimatedBuilder(
+                      animation: slidingAnimation,
+                      builder: (context, child) => SlideTransition(
+                        position: slidingAnimation,
+                        child: CustomTextFormField(
+                          hint: 'Password',
+                          controller: _controller4,
+                          onChanged: onFieldDataChanged,
+                        ),
+                      ),
                     ),
                   ),
                 ],
@@ -129,16 +163,21 @@ class _ProfileSuccessBodyState extends State<ProfileSuccessBody> {
               child: Padding(
                 padding: const EdgeInsets.symmetric(vertical: 30),
                 child: Center(
-                  child: Container(
-                    width: MediaQuery.of(context).size.width * 0.35,
-                    height: 55,
-                    child: CustomButton(
-                      enabled: isVisible,
-                      text: 'Save',
-                      onPressed: onButtonPressed,
+                    child: AnimatedBuilder(
+                  animation: slidingAnimation,
+                  builder: (context, child) => SlideTransition(
+                    position: slidingAnimation,
+                    child: Container(
+                      width: MediaQuery.of(context).size.width * 0.35,
+                      height: 55,
+                      child: CustomButton(
+                        enabled: isVisible,
+                        text: 'Save',
+                        onPressed: onButtonPressed,
+                      ),
                     ),
                   ),
-                ),
+                )),
               ),
             ),
           ),
@@ -180,5 +219,18 @@ class _ProfileSuccessBodyState extends State<ProfileSuccessBody> {
       kPhone: phone,
     });
     await BlocProvider.of<ProfileCubit>(context).getUserData(email);
+  }
+
+  void initSlidingAnimation() {
+    animationController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 800),
+    );
+
+    slidingAnimation = Tween<Offset>(
+      begin: const Offset(0, 20),
+      end: Offset.zero,
+    ).animate(animationController);
+    animationController.forward();
   }
 }
