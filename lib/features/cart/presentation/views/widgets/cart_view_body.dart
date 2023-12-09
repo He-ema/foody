@@ -20,6 +20,7 @@ class CartViewBody extends StatefulWidget {
 
 class _CartViewBodyState extends State<CartViewBody> {
   final GlobalKey<AnimatedListState> _listKey = GlobalKey<AnimatedListState>();
+  bool startAnimation = false;
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<CartCubit, CartState>(
@@ -28,6 +29,11 @@ class _CartViewBodyState extends State<CartViewBody> {
           if (state.cartItems.isEmpty) {
             return const EmptyCartView();
           } else {
+            WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+              setState(() {
+                startAnimation = true;
+              });
+            });
             return Stack(
               children: [
                 Padding(
@@ -66,6 +72,7 @@ class _CartViewBodyState extends State<CartViewBody> {
                                     ),
                                   ]),
                               child: ProductContainer(
+                                startAnimation: startAnimation,
                                 index: index,
                                 state: state,
                               ),

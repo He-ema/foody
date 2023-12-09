@@ -10,15 +10,21 @@ class ProductContainer extends StatelessWidget {
     super.key,
     required this.state,
     required this.index,
+    required this.startAnimation,
   });
   final CartSuccess state;
   final int index;
+  final bool startAnimation;
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return AnimatedContainer(
+      transform: Matrix4.translationValues(
+          startAnimation ? 0 : MediaQuery.of(context).size.width, 0, 0),
+      curve: Curves.easeInOut,
+      duration: Duration(milliseconds: 300 + (index * 250)),
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
-          border: Border.all(width: 1, color: kPrimaryColor),
+          border: Border.all(width: 0.2, color: kPrimaryColor),
           borderRadius: BorderRadius.circular(15)),
       child: Row(
         children: [
