@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:foody/constants.dart';
+import 'package:foody/core/common/widgets/custom_button.dart';
 import 'package:foody/core/utils/asset_data.dart';
 import 'package:foody/core/utils/styles.dart';
 import 'package:foody/features/cart/presentation/manager/cart_cubit/cart_cubit.dart';
@@ -21,6 +22,8 @@ class CartViewBody extends StatefulWidget {
 class _CartViewBodyState extends State<CartViewBody> {
   final GlobalKey<AnimatedListState> _listKey = GlobalKey<AnimatedListState>();
   bool startAnimation = false;
+  bool isOpened = false;
+  bool appeared = false;
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<CartCubit, CartState>(
@@ -35,6 +38,7 @@ class _CartViewBodyState extends State<CartViewBody> {
               });
             });
             return Stack(
+              alignment: Alignment.bottomCenter,
               children: [
                 Padding(
                   padding: const EdgeInsets.symmetric(
@@ -83,14 +87,91 @@ class _CartViewBodyState extends State<CartViewBody> {
                     ],
                   ),
                 ),
-                Positioned(
-                  bottom: 0,
-                  left: 0,
-                  right: 0,
-                  child: Container(
-                    child: Image.asset(AssetData.priceInfo),
+                AnimatedContainer(
+                  duration: const Duration(seconds: 1),
+                  alignment: Alignment(1, 1),
+                  onEnd: () {
+                    appeared == true ? appeared = false : appeared = true;
+                    setState(() {});
+                  },
+                  margin: isOpened ? const EdgeInsets.all(10) : EdgeInsets.zero,
+                  padding: isOpened
+                      ? const EdgeInsets.symmetric(horizontal: 20)
+                      : EdgeInsets.zero,
+                  height:
+                      isOpened ? MediaQuery.of(context).size.height * 0.25 : 50,
+                  width: isOpened ? MediaQuery.of(context).size.width : 50,
+                  decoration: BoxDecoration(
+                    color: kPrimaryColor,
+                    borderRadius: BorderRadius.circular(15),
+                    image: const DecorationImage(
+                        image: AssetImage(AssetData.pricePattern),
+                        fit: BoxFit.cover),
                   ),
-                )
+                  child: isOpened
+                      ? AnimatedOpacity(
+                          duration: const Duration(seconds: 1),
+                          opacity: appeared ? 1 : 0,
+                          child: Column(
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  IconButton(
+                                      onPressed: () {
+                                        isOpened == true
+                                            ? isOpened = false
+                                            : isOpened = true;
+                                        setState(() {});
+                                      },
+                                      // ignore: prefer_const_constructors
+                                      icon: Icon(
+                                        Icons.close_rounded,
+                                        size: 30,
+                                        color: Colors.white,
+                                      )),
+                                ],
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    'Sub-Total : ',
+                                    style: Styles.textStyle22
+                                        .copyWith(color: Colors.white),
+                                  ),
+                                  Text(
+                                    '50\$',
+                                    style: Styles.textStyle22
+                                        .copyWith(color: Colors.white),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ],
+                              )
+                            ],
+                          ),
+                        )
+                      : Center(
+                          child: GestureDetector(
+                            onTap: () {
+                              isOpened == true
+                                  ? isOpened = false
+                                  : isOpened = true;
+                              setState(() {});
+                            },
+                            child: AnimatedOpacity(
+                              duration: Duration(seconds: 1),
+                              opacity: appeared ? 0 : 1,
+                              child: Text(
+                                'Pay',
+                                style: Styles.textStyle22
+                                    .copyWith(color: Colors.white),
+                              ),
+                            ),
+                          ),
+                        ),
+                ),
               ],
             );
           }
@@ -181,6 +262,46 @@ class _CartViewBodyState extends State<CartViewBody> {
       () {
         setState(() {});
       },
+    );
+  }
+}
+
+class PriceArea extends StatelessWidget {
+  const PriceArea({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedContainer(
+      duration: const Duration(seconds: 2),
+      margin: const EdgeInsets.all(10),
+      padding: const EdgeInsets.all(20),
+      height: MediaQuery.of(context).size.height * 0.25,
+      width: MediaQuery.of(context).size.width,
+      decoration: BoxDecoration(
+        color: kPrimaryColor,
+        borderRadius: BorderRadius.circular(15),
+        image: const DecorationImage(
+            image: AssetImage(AssetData.pricePattern), fit: BoxFit.cover),
+      ),
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'Sub-Total : ',
+                style: Styles.textStyle22.copyWith(color: Colors.white),
+              ),
+              Text(
+                '50\$',
+                style: Styles.textStyle22.copyWith(color: Colors.white),
+              ),
+            ],
+          )
+        ],
+      ),
     );
   }
 }

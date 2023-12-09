@@ -19,5 +19,5 @@ abstract class AssetData {
   static const String advertise1 = 'assets/images/advertise1.png';
   static const String advertise2 = 'assets/images/advertise2.png';
   static const String advertise3 = 'assets/images/advertise3.png';
-  static const String priceInfo = 'assets/images/Price_Info.png';
+  static const String pricePattern = 'assets/images/pricePattern.png';
 }
