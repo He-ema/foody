@@ -89,20 +89,22 @@ class _CartViewBodyState extends State<CartViewBody> {
                 ),
                 AnimatedContainer(
                   duration: const Duration(seconds: 1),
-                  alignment: Alignment(1, 1),
+                  alignment: const Alignment(1, 1),
                   onEnd: () {
                     appeared == true ? appeared = false : appeared = true;
                     setState(() {});
                   },
-                  margin: isOpened ? const EdgeInsets.all(10) : EdgeInsets.zero,
+                  margin: isOpened
+                      ? const EdgeInsets.all(10)
+                      : const EdgeInsets.only(bottom: 10),
                   padding: isOpened
                       ? const EdgeInsets.symmetric(horizontal: 20)
                       : EdgeInsets.zero,
                   height:
-                      isOpened ? MediaQuery.of(context).size.height * 0.25 : 50,
-                  width: isOpened ? MediaQuery.of(context).size.width : 50,
+                      isOpened ? MediaQuery.of(context).size.height * 0.25 : 60,
+                  width: isOpened ? MediaQuery.of(context).size.width : 150,
                   decoration: BoxDecoration(
-                    color: kPrimaryColor,
+                    color: isOpened ? kPrimaryColor : Colors.green,
                     borderRadius: BorderRadius.circular(15),
                     image: const DecorationImage(
                         image: AssetImage(AssetData.pricePattern),
@@ -115,8 +117,14 @@ class _CartViewBodyState extends State<CartViewBody> {
                           child: Column(
                             children: [
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
+                                  Text(
+                                    'Payment-details',
+                                    style: Styles.textStyle22
+                                        .copyWith(color: Colors.white),
+                                  ),
                                   IconButton(
                                       onPressed: () {
                                         isOpened == true
@@ -148,6 +156,37 @@ class _CartViewBodyState extends State<CartViewBody> {
                                     textAlign: TextAlign.center,
                                   ),
                                 ],
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    'Delivery : ',
+                                    style: Styles.textStyle22
+                                        .copyWith(color: Colors.white),
+                                  ),
+                                  Text(
+                                    '10\$',
+                                    style: Styles.textStyle22
+                                        .copyWith(color: Colors.white),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ],
+                              ),
+                              const Spacer(),
+                              Container(
+                                margin: const EdgeInsets.only(bottom: 10),
+                                width: MediaQuery.of(context).size.width,
+                                child: CustomButton(
+                                  fillColor: Colors.white,
+                                  textColor: kPrimaryColor,
+                                  text: 'Confirm',
+                                  onPressed: () {},
+                                ),
                               )
                             ],
                           ),
@@ -161,7 +200,7 @@ class _CartViewBodyState extends State<CartViewBody> {
                               setState(() {});
                             },
                             child: AnimatedOpacity(
-                              duration: Duration(seconds: 1),
+                              duration: const Duration(seconds: 1),
                               opacity: appeared ? 0 : 1,
                               child: Text(
                                 'Pay',
