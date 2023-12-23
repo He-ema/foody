@@ -88,7 +88,7 @@ class _CartViewBodyState extends State<CartViewBody> {
                   ),
                 ),
                 AnimatedContainer(
-                  duration: const Duration(seconds: 1),
+                  duration: const Duration(milliseconds: 500),
                   alignment: const Alignment(1, 1),
                   onEnd: () {
                     appeared == true ? appeared = false : appeared = true;
@@ -297,50 +297,10 @@ class _CartViewBodyState extends State<CartViewBody> {
     );
     await favourite.doc(id.toString()).delete();
     Future.delayed(
-      const Duration(seconds: 1),
+      const Duration(seconds: 2),
       () {
         setState(() {});
       },
-    );
-  }
-}
-
-class PriceArea extends StatelessWidget {
-  const PriceArea({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return AnimatedContainer(
-      duration: const Duration(seconds: 2),
-      margin: const EdgeInsets.all(10),
-      padding: const EdgeInsets.all(20),
-      height: MediaQuery.of(context).size.height * 0.25,
-      width: MediaQuery.of(context).size.width,
-      decoration: BoxDecoration(
-        color: kPrimaryColor,
-        borderRadius: BorderRadius.circular(15),
-        image: const DecorationImage(
-            image: AssetImage(AssetData.pricePattern), fit: BoxFit.cover),
-      ),
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                'Sub-Total : ',
-                style: Styles.textStyle22.copyWith(color: Colors.white),
-              ),
-              Text(
-                '50\$',
-                style: Styles.textStyle22.copyWith(color: Colors.white),
-              ),
-            ],
-          )
-        ],
-      ),
     );
   }
 }

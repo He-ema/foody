@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:foody/constants.dart';
-import 'package:foody/core/common/widgets/custom_text_form_field.dart';
 import 'package:foody/core/utils/styles.dart';
 import 'package:foody/features/profile/presentation/manager/profile_cubit/profile_cubit.dart';
 import 'package:foody/features/profile/presentation/views/widgets/profile_loading_view.dart';
@@ -27,7 +25,7 @@ class ProfileViewBody extends StatelessWidget {
             ),
           );
         } else {
-          return ProfileLoadingView();
+          return const ProfileLoadingView();
         }
       },
     );

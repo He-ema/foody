@@ -20,8 +20,7 @@ class ProfileSuccessBody extends StatefulWidget {
   State<ProfileSuccessBody> createState() => _ProfileSuccessBodyState();
 }
 
-class _ProfileSuccessBodyState extends State<ProfileSuccessBody>
-    with SingleTickerProviderStateMixin {
+class _ProfileSuccessBodyState extends State<ProfileSuccessBody> {
   final TextEditingController _controller = TextEditingController();
 
   final TextEditingController _controller2 = TextEditingController();
@@ -30,11 +29,9 @@ class _ProfileSuccessBodyState extends State<ProfileSuccessBody>
 
   final TextEditingController _controller4 = TextEditingController();
 
-  late AnimationController animationController;
-  late Animation<Offset> slidingAnimation;
-
   bool isLoading = false;
   bool isVisible = false;
+  bool success = false;
 
   @override
   void initState() {
@@ -44,7 +41,14 @@ class _ProfileSuccessBodyState extends State<ProfileSuccessBody>
     _controller2.text = widget.state.user.secondName;
     _controller3.text = widget.state.user.email;
     _controller4.text = widget.state.user.phone;
-    initSlidingAnimation();
+    Future.delayed(
+      Duration(milliseconds: 1),
+      () {
+        setState(() {
+          success = true;
+        });
+      },
+    );
   }
 
   @override
@@ -55,118 +59,87 @@ class _ProfileSuccessBodyState extends State<ProfileSuccessBody>
     _controller2.dispose();
     _controller3.dispose();
     _controller4.dispose();
-    animationController.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return ModalProgressHUD(
-      inAsyncCall: isLoading,
-      child: CustomScrollView(
-        physics: const BouncingScrollPhysics(),
-        slivers: [
-          SliverToBoxAdapter(
-            child: Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: kHorizontalPadding),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.15,
-                  ),
-                  AnimatedBuilder(
-                    animation: slidingAnimation,
-                    builder: (context, child) => SlideTransition(
-                        position: slidingAnimation,
-                        child: ImageArea(widget: widget)),
-                  ),
-                  const SizedBox(
-                    height: 30,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      AnimatedBuilder(
-                        animation: slidingAnimation,
-                        builder: (context, child) => SlideTransition(
-                          position: slidingAnimation,
-                          child: SizedBox(
-                            width: MediaQuery.of(context).size.width * 0.4,
-                            child: CustomTextFormField(
-                              hint: 'First name',
-                              controller: _controller,
-                              onChanged: onFieldDataChanged,
-                            ),
+    return AnimatedOpacity(
+      duration: const Duration(seconds: 1),
+      opacity: success ? 1 : 0,
+      child: ModalProgressHUD(
+        inAsyncCall: isLoading,
+        child: CustomScrollView(
+          physics: const BouncingScrollPhysics(),
+          slivers: [
+            SliverToBoxAdapter(
+              child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: kHorizontalPadding),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.15,
+                    ),
+                    ImageArea(widget: widget),
+                    const SizedBox(
+                      height: 30,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width * 0.4,
+                          child: CustomTextFormField(
+                            hint: 'First name',
+                            controller: _controller,
+                            onChanged: onFieldDataChanged,
                           ),
                         ),
-                      ),
-                      AnimatedBuilder(
-                        animation: slidingAnimation,
-                        builder: (context, child) => SlideTransition(
-                          position: slidingAnimation,
-                          child: SizedBox(
-                            width: MediaQuery.of(context).size.width * 0.4,
-                            child: CustomTextFormField(
-                              hint: 'Second name',
-                              controller: _controller2,
-                              onChanged: onFieldDataChanged,
-                            ),
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width * 0.4,
+                          child: CustomTextFormField(
+                            hint: 'Second name',
+                            controller: _controller2,
+                            onChanged: onFieldDataChanged,
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width,
-                    child: AnimatedBuilder(
-                      animation: slidingAnimation,
-                      builder: (context, child) => SlideTransition(
-                        position: slidingAnimation,
-                        child: CustomTextFormField(
-                          hint: 'Email',
-                          enabled: false,
-                          controller: _controller3,
-                          onChanged: onFieldDataChanged,
-                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width,
+                      child: CustomTextFormField(
+                        hint: 'Email',
+                        enabled: false,
+                        controller: _controller3,
+                        onChanged: onFieldDataChanged,
                       ),
                     ),
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width,
-                    child: AnimatedBuilder(
-                      animation: slidingAnimation,
-                      builder: (context, child) => SlideTransition(
-                        position: slidingAnimation,
-                        child: CustomTextFormField(
-                          hint: 'Password',
-                          controller: _controller4,
-                          onChanged: onFieldDataChanged,
-                        ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width,
+                      child: CustomTextFormField(
+                        hint: 'Password',
+                        controller: _controller4,
+                        onChanged: onFieldDataChanged,
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
-          ),
-          SliverFillRemaining(
-            hasScrollBody: false,
-            child: Align(
-              alignment: Alignment.bottomCenter,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 30),
-                child: Center(
-                    child: AnimatedBuilder(
-                  animation: slidingAnimation,
-                  builder: (context, child) => SlideTransition(
-                    position: slidingAnimation,
+            SliverFillRemaining(
+              hasScrollBody: false,
+              child: Align(
+                alignment: Alignment.bottomCenter,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 30),
+                  child: Center(
                     child: Container(
                       width: MediaQuery.of(context).size.width * 0.35,
                       height: 55,
@@ -177,23 +150,27 @@ class _ProfileSuccessBodyState extends State<ProfileSuccessBody>
                       ),
                     ),
                   ),
-                )),
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
 
   onFieldDataChanged(value) {
     isVisible = true;
-    setState(() {});
+    if (mounted) {
+      setState(() {});
+    }
   }
 
   void onButtonPressed() async {
     isLoading = true;
-    setState(() {});
+    if (mounted) {
+      setState(() {});
+    }
     await UpdateData(
         email: widget.state.user.email,
         firstName: _controller.text,
@@ -219,18 +196,5 @@ class _ProfileSuccessBodyState extends State<ProfileSuccessBody>
       kPhone: phone,
     });
     await BlocProvider.of<ProfileCubit>(context).getUserData(email);
-  }
-
-  void initSlidingAnimation() {
-    animationController = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 800),
-    );
-
-    slidingAnimation = Tween<Offset>(
-      begin: const Offset(0, 20),
-      end: Offset.zero,
-    ).animate(animationController);
-    animationController.forward();
   }
 }
