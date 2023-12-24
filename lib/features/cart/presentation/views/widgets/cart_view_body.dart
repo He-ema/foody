@@ -24,6 +24,18 @@ class _CartViewBodyState extends State<CartViewBody> {
   bool startAnimation = false;
   bool isOpened = false;
   bool appeared = false;
+  ValueNotifier<double> price = ValueNotifier<double>(0);
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    price.addListener(() {
+      setState(() {});
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<CartCubit, CartState>(
@@ -36,6 +48,8 @@ class _CartViewBodyState extends State<CartViewBody> {
               setState(() {
                 startAnimation = true;
               });
+              final double total = state.price;
+              price.value = total;
             });
             return Stack(
               alignment: Alignment.bottomCenter,
@@ -55,34 +69,39 @@ class _CartViewBodyState extends State<CartViewBody> {
                       const Divider(),
                       Expanded(
                         child: AnimatedList(
-                          key: _listKey,
-                          initialItemCount: state.cartItems.length,
-                          itemBuilder: (context, index, animation) => Padding(
-                            padding: const EdgeInsets.only(bottom: 20),
-                            child: Slidable(
-                              startActionPane: ActionPane(
-                                  motion: const StretchMotion(),
-                                  children: [
-                                    SlidableAction(
-                                      onPressed: (context) {
-                                        deleteListItem(index, context, state,
-                                            widget.email);
-                                      },
-                                      icon: Icons.delete,
-                                      label: 'Delete',
-                                      backgroundColor: kPrimaryColor,
-                                      padding: const EdgeInsets.all(10),
-                                      borderRadius: BorderRadius.circular(15),
-                                    ),
-                                  ]),
-                              child: ProductContainer(
-                                startAnimation: startAnimation,
-                                index: index,
-                                state: state,
-                              ),
-                            ),
-                          ),
-                        ),
+                            key: _listKey,
+                            initialItemCount: state.cartItems.length,
+                            itemBuilder: (context, index, animation) {
+                              return Padding(
+                                padding: const EdgeInsets.only(bottom: 20),
+                                child: Slidable(
+                                  startActionPane: ActionPane(
+                                      motion: const StretchMotion(),
+                                      children: [
+                                        SlidableAction(
+                                          onPressed: (context) {
+                                            deleteListItem(index, context,
+                                                state, widget.email);
+                                          },
+                                          icon: Icons.delete,
+                                          label: 'Delete',
+                                          backgroundColor: kPrimaryColor,
+                                          padding: const EdgeInsets.all(10),
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                        ),
+                                      ]),
+                                  child: ProductContainer(
+                                    startAnimation: startAnimation,
+                                    index: index,
+                                    state: state,
+                                    onAddTap: () {
+                                      price.value += 10;
+                                    },
+                                  ),
+                                ),
+                              );
+                            }),
                       )
                     ],
                   ),
@@ -150,7 +169,7 @@ class _CartViewBodyState extends State<CartViewBody> {
                                         .copyWith(color: Colors.white),
                                   ),
                                   Text(
-                                    '50\$',
+                                    '${price.value}\$',
                                     style: Styles.textStyle22
                                         .copyWith(color: Colors.white),
                                     textAlign: TextAlign.center,

@@ -11,10 +11,14 @@ class ProductContainer extends StatelessWidget {
     required this.state,
     required this.index,
     required this.startAnimation,
+    this.onRemoveTap,
+    this.onAddTap,
   });
   final CartSuccess state;
   final int index;
   final bool startAnimation;
+  final void Function()? onRemoveTap;
+  final void Function()? onAddTap;
   @override
   Widget build(BuildContext context) {
     return AnimatedContainer(
@@ -24,6 +28,7 @@ class ProductContainer extends StatelessWidget {
       duration: Duration(milliseconds: 300 + (index * 250)),
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
+          border: Border.all(style: BorderStyle.solid, width: 0.1),
           color: Colors.white,
           boxShadow: const [
             BoxShadow(
@@ -31,14 +36,7 @@ class ProductContainer extends StatelessWidget {
               offset: Offset(1, 1),
               spreadRadius: 0.5,
             ),
-            // BoxShadow(
-            //   color: Colors.grey,
-            //   offset: Offset(-1, -1),
-            //   // spreadRadius: 0.0,
-            //   // blurRadius: 0.5,
-            // ),
           ],
-          // border: Border.all(width: 0.02, color: kPrimaryColor),
           borderRadius: BorderRadius.circular(15)),
       child: Row(
         children: [
@@ -85,9 +83,12 @@ class ProductContainer extends StatelessWidget {
                           color: kPrimaryColor.withOpacity(0.1),
                           borderRadius: BorderRadius.circular(10),
                         ),
-                        child: const Icon(
-                          Icons.remove,
-                          color: kPrimaryColor,
+                        child: GestureDetector(
+                          onTap: onRemoveTap,
+                          child: const Icon(
+                            Icons.remove,
+                            color: kPrimaryColor,
+                          ),
                         ),
                       ),
                       Text(
@@ -101,9 +102,12 @@ class ProductContainer extends StatelessWidget {
                           color: kPrimaryColor,
                           borderRadius: BorderRadius.circular(10),
                         ),
-                        child: const Icon(
-                          Icons.add,
-                          color: Colors.white,
+                        child: GestureDetector(
+                          onTap: onAddTap,
+                          child: const Icon(
+                            Icons.add,
+                            color: Colors.white,
+                          ),
                         ),
                       ),
                     ],

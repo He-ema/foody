@@ -19,6 +19,7 @@ final class CartFailure extends CartState {
 
 final class CartSuccess extends CartState {
   final List<CartModel> cartItems;
+  final double price;
 
-  const CartSuccess(this.cartItems);
+  const CartSuccess(this.cartItems, this.price);
 }

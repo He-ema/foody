@@ -10,16 +10,20 @@ class CartCubit extends Cubit<CartState> {
   CartCubit() : super(CartInitial());
 
   Future<void> getAllCartItems({required String email}) async {
+    double total = 0;
     emit(CartLoading());
     try {
       CollectionReference cart = FirebaseFirestore.instance
           .collection(email + kCartCollectionReference);
       var data = await cart.get();
       List<CartModel> tempList = [];
+      int index = 0;
       for (var element in data.docs) {
         tempList.add(CartModel.fromJson(element));
+        total += tempList[index].price;
+        index++;
       }
-      emit(CartSuccess(tempList));
+      emit(CartSuccess(tempList, total));
     } catch (e) {
       emit(CartFailure(e.toString()));
     }
