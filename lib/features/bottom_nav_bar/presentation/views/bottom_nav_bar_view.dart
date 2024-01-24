@@ -43,7 +43,7 @@ class _BottomNavigationBarViewState extends State<BottomNavigationBarView> {
           ..getAllCartItems(email: BlocProvider.of<AuthCubit>(context).email!),
         child: CartView(email: BlocProvider.of<AuthCubit>(context).email!),
       ),
-      ChatView(),
+      const ChatView(),
     ];
 
     AuthCubit().close();

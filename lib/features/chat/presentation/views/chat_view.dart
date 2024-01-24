@@ -9,7 +9,7 @@ class ChatView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
-      body: BackgroundStack(
+      body: const BackgroundStack(
         body: ChatViewBody(),
         isBig: false,
       ),

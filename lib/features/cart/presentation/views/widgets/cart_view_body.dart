@@ -24,16 +24,12 @@ class _CartViewBodyState extends State<CartViewBody> {
   bool startAnimation = false;
   bool isOpened = false;
   bool appeared = false;
-  ValueNotifier<double> price = ValueNotifier<double>(0);
+  double pricee = 0;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-
-    price.addListener(() {
-      setState(() {});
-    });
   }
 
   @override
@@ -48,8 +44,6 @@ class _CartViewBodyState extends State<CartViewBody> {
               setState(() {
                 startAnimation = true;
               });
-              final double total = state.price;
-              price.value = total;
             });
             return Stack(
               alignment: Alignment.bottomCenter,
@@ -95,9 +89,7 @@ class _CartViewBodyState extends State<CartViewBody> {
                                     startAnimation: startAnimation,
                                     index: index,
                                     state: state,
-                                    onAddTap: () {
-                                      price.value += 10;
-                                    },
+                                    onAddTap: () {},
                                   ),
                                 ),
                               );
@@ -169,7 +161,7 @@ class _CartViewBodyState extends State<CartViewBody> {
                                         .copyWith(color: Colors.white),
                                   ),
                                   Text(
-                                    '${price.value}\$',
+                                    '${pricee}\$',
                                     style: Styles.textStyle22
                                         .copyWith(color: Colors.white),
                                     textAlign: TextAlign.center,
