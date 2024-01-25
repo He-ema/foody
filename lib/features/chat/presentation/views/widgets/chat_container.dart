@@ -24,7 +24,8 @@ class ChatContainer extends StatelessWidget {
       },
       child: AnimatedContainer(
           duration: const Duration(seconds: 1),
-          margin: const EdgeInsets.symmetric(horizontal: kHorizontalPadding),
+          margin: const EdgeInsets.only(
+              left: kHorizontalPadding, right: kHorizontalPadding, bottom: 15),
           decoration: BoxDecoration(
             border: Border.all(width: 0.1),
             boxShadow: const [

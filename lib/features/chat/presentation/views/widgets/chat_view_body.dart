@@ -30,7 +30,13 @@ class ChatViewBody extends StatelessWidget {
                 style: Styles.textStyle30,
               ),
               const Divider(),
-              ChatContainer(user: state.delivery[0]),
+              Expanded(
+                  child: ListView.builder(
+                padding: EdgeInsets.zero,
+                itemCount: state.delivery.length,
+                itemBuilder: (context, index) =>
+                    ChatContainer(user: state.delivery[index]),
+              ))
             ],
           );
         } else {
