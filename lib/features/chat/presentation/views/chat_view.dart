@@ -13,7 +13,7 @@ class ChatView extends StatelessWidget {
       backgroundColor: Theme.of(context).colorScheme.background,
       body: BackgroundStack(
         body: BlocProvider(
-          create: (context) => GetDeliveryDataCubit(),
+          create: (context) => GetDeliveryDataCubit()..getDeliveryData(),
           child: const ChatViewBody(),
         ),
         isBig: false,

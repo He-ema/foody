@@ -14,8 +14,12 @@ class GetDeliveryDataCubit extends Cubit<GetDeliveryDataState> {
     try {
       CollectionReference users =
           FirebaseFirestore.instance.collection(kUsersCollectionReference);
-      var data = users.doc().get();
-      print(data);
+      var data = await users.get();
+      List<UserModel> tempList = [];
+      for (var doc in data.docs) {
+        tempList.add(UserModel.fromJson(doc));
+      }
+      emit(GetDeliveryDataSuccess(tempList));
     } catch (e) {
       emit(GetDeliveryDataFailure(e.toString()));
     }
