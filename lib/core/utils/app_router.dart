@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:foody/features/OTP/presentation/views/otp_view.dart';
+import 'package:foody/features/chat/presentation/views/chatting_view.dart';
 import 'package:foody/features/congratulations/presentation/views/congratulations_view.dart';
 import 'package:foody/features/info/presentation/views/info_view.dart';
 import 'package:foody/features/logIn/presentation/views/login_view.dart';
@@ -18,6 +19,7 @@ abstract class AppRouter {
   static const otpRoute = '/otp';
   static const congratsRoute = '/congrat';
   static const bottomNavBarRoute = '/bottomNavBarRoute';
+  static const chattingPageRoute = '/chattingPage';
 
   static final router = GoRouter(
     routes: [
@@ -52,6 +54,10 @@ abstract class AppRouter {
       GoRoute(
         path: bottomNavBarRoute,
         builder: (context, state) => const BottomNavigationBarView(),
+      ),
+      GoRoute(
+        path: chattingPageRoute,
+        builder: (context, state) => const ChattingView(),
       ),
     ],
   );
