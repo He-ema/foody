@@ -13,7 +13,7 @@ class ChatViewBody extends StatelessWidget {
     return BlocBuilder<GetDeliveryDataCubit, GetDeliveryDataState>(
       builder: (context, state) {
         if (state is GetDeliveryDataFailure) {
-          return Center(
+          return const Center(
             child: Text(
               'Error getting chats',
               style: Styles.textStyle25,
@@ -22,19 +22,19 @@ class ChatViewBody extends StatelessWidget {
         } else if (state is GetDeliveryDataSuccess) {
           return Column(
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 50,
               ),
-              Text(
+              const Text(
                 'Chats',
                 style: Styles.textStyle30,
               ),
-              Divider(),
+              const Divider(),
               ChatContainer(user: state.delivery[0]),
             ],
           );
         } else {
-          return Center(
+          return const Center(
             child: CircularProgressIndicator(),
           );
         }

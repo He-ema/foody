@@ -20,7 +20,7 @@ class ChatContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () async {
-        GoRouter.of(context).push(AppRouter.chattingPageRoute);
+        GoRouter.of(context).push(AppRouter.chattingPageRoute, extra: user);
       },
       child: AnimatedContainer(
           duration: const Duration(seconds: 1),

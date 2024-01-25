@@ -5,6 +5,7 @@ import 'package:foody/features/congratulations/presentation/views/congratulation
 import 'package:foody/features/info/presentation/views/info_view.dart';
 import 'package:foody/features/logIn/presentation/views/login_view.dart';
 import 'package:foody/features/onBoarding/presentation/views/onBoarding_view.dart';
+import 'package:foody/features/profile/data/models/user_model.dart';
 import 'package:foody/features/signIn/presentation/views/signIn_view.dart';
 import 'package:go_router/go_router.dart';
 
@@ -57,7 +58,8 @@ abstract class AppRouter {
       ),
       GoRoute(
         path: chattingPageRoute,
-        builder: (context, state) => const ChattingView(),
+        builder: (context, state) =>
+            ChattingView(user: state.extra as UserModel),
       ),
     ],
   );

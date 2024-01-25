@@ -1,15 +1,18 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:foody/constants.dart';
 import 'package:foody/core/common/custom_icon.dart';
 import 'package:foody/core/common/widgets/custom_text_form_field.dart';
 import 'package:foody/core/utils/styles.dart';
 import 'package:foody/features/chat/presentation/views/widgets/chat_bubble.dart';
+import 'package:foody/features/profile/data/models/user_model.dart';
 
 import 'chatting_text_field.dart';
 
 class ChattingViewBody extends StatelessWidget {
-  const ChattingViewBody({super.key});
+  const ChattingViewBody({super.key, required this.user});
 
+  final UserModel user;
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -50,14 +53,15 @@ class ChattingViewBody extends StatelessWidget {
                           offset: Offset(1, 1),
                         )
                       ]),
-                  child: const Row(
+                  child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       CircleAvatar(
                         radius: 30,
+                        backgroundImage: CachedNetworkImageProvider(user.image),
                       ),
                       Text(
-                        'Ahmed Mohamed',
+                        user.firstName + ' ' + user.secondName,
                         style: Styles.textStyle20,
                       ),
                     ],
