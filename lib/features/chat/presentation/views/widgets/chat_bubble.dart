@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:foody/constants.dart';
 
 class ChatBubble extends StatelessWidget {
-  const ChatBubble({super.key, this.isSender = true});
-
+  const ChatBubble({super.key, this.isSender = true, required this.text});
+  final String text;
   final bool isSender;
   @override
   Widget build(BuildContext context) {
@@ -31,8 +31,8 @@ class ChatBubble extends StatelessWidget {
               isSender ? const Radius.circular(0) : const Radius.circular(15),
         ),
       ),
-      child: const Text(
-        'Test Message',
+      child: Text(
+        text,
         style: TextStyle(color: Colors.white, fontSize: 15),
       ),
     );

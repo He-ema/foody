@@ -9,7 +9,10 @@ sealed class ChatState extends Equatable {
 
 final class ChatInitial extends ChatState {}
 
+final class ChatLoading extends ChatState {}
+
 final class ChatSuccess extends ChatState {
-  final List<MessageModel> chats;
-  const ChatSuccess(this.chats);
+  final List<MessageModel> messages;
+
+  const ChatSuccess(this.messages);
 }

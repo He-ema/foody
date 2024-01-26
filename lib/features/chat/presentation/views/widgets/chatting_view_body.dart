@@ -2,17 +2,18 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:foody/constants.dart';
 import 'package:foody/core/common/custom_icon.dart';
-import 'package:foody/core/common/widgets/custom_text_form_field.dart';
 import 'package:foody/core/utils/styles.dart';
-import 'package:foody/features/chat/presentation/views/widgets/chat_bubble.dart';
+import 'package:foody/features/chat/data/models/message_model.dart';
 import 'package:foody/features/profile/data/models/user_model.dart';
 
+import 'chat_bubble.dart';
 import 'chatting_text_field.dart';
 import 'messages_list_view.dart';
 
 class ChattingViewBody extends StatelessWidget {
-  const ChattingViewBody({super.key, required this.user});
-
+  const ChattingViewBody(
+      {super.key, required this.user, required this.messages});
+  final List<MessageModel> messages;
   final UserModel user;
   @override
   Widget build(BuildContext context) {
@@ -70,15 +71,32 @@ class ChattingViewBody extends StatelessWidget {
                   ),
                 ),
               ),
-              const MessagesListView(),
+              Expanded(
+                  child: ListView.builder(
+                itemCount: messages.length,
+                reverse: true,
+                padding: EdgeInsets.zero,
+                itemBuilder: (context, index) => ChatBubble(
+                  isSender: true,
+                  text: messages[index].text,
+                ),
+              )),
+              // MessagesListView(
+              //   email: user.email,
+              // ),
+              const SizedBox(
+                height: 63,
+              ),
             ],
           ),
         ),
-        const Positioned(
+        Positioned(
           bottom: 5,
           left: 5,
           right: 5,
-          child: ChattingTextField(),
+          child: ChattingTextField(
+            email: user.email,
+          ),
         ),
       ],
     );

@@ -14,6 +14,7 @@ import 'package:foody/features/home/presentation/manager/products_cubit/products
 import 'package:foody/simple_bloc_observer.dart';
 import 'package:hive_flutter/adapters.dart';
 
+import 'features/chat/presentation/managers/chat_cubit/chat_cubit.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -37,6 +38,9 @@ void main() async {
       ),
       BlocProvider(
         create: (context) => AuthCubit(),
+      ),
+      BlocProvider(
+        create: (context) => ChatCubit(),
       ),
       BlocProvider(
         create: (context) => ProductsCubit(
