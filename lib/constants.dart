@@ -15,3 +15,6 @@ const kPrice = 'price';
 const kQuantity = 'quantity';
 const kId = 'Id';
 const kToken = 'token';
+const kTime = 'time';
+const kSender = 'sender';
+const kText = 'text';
