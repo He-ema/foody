@@ -14,3 +14,4 @@ const kPhone = 'phone';
 const kPrice = 'price';
 const kQuantity = 'quantity';
 const kId = 'Id';
+const kToken = 'token';

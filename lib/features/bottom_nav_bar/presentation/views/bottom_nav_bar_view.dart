@@ -8,6 +8,7 @@ import 'package:foody/features/chat/presentation/views/chat_view.dart';
 import 'package:foody/features/home/presentation/views/home_view.dart';
 import 'package:foody/features/profile/presentation/manager/profile_cubit/profile_cubit.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:hive/hive.dart';
 
 import '../../../cart/presentation/views/cart_view.dart';
 import '../../../profile/presentation/views/profile_view.dart';
@@ -24,24 +25,31 @@ class BottomNavigationBarView extends StatefulWidget {
 
 class _BottomNavigationBarViewState extends State<BottomNavigationBarView> {
   int currentIndex = 0;
-
+  late String email;
   late List views;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+
+    var box = Hive.box(kEmail);
+
+    box.get(kEmail) == null
+        ? {
+            email = BlocProvider.of<AuthCubit>(context).email!,
+            box.put(kEmail, BlocProvider.of<AuthCubit>(context).email!)
+          }
+        : email = box.get(kEmail);
     views = [
-      HomeView(email: BlocProvider.of<AuthCubit>(context).email!),
+      HomeView(email: email),
       BlocProvider(
-        create: (context) => ProfileCubit()
-          ..getUserData(BlocProvider.of<AuthCubit>(context).email!),
-        child: ProfileView(email: BlocProvider.of<AuthCubit>(context).email!),
+        create: (context) => ProfileCubit()..getUserData(email),
+        child: ProfileView(email: email),
       ),
       BlocProvider(
-        create: (context) => CartCubit()
-          ..getAllCartItems(email: BlocProvider.of<AuthCubit>(context).email!),
-        child: CartView(email: BlocProvider.of<AuthCubit>(context).email!),
+        create: (context) => CartCubit()..getAllCartItems(email: email),
+        child: CartView(email: email),
       ),
       const ChatView(),
     ];

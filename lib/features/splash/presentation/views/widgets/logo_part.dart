@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:foody/core/utils/app_router.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hive/hive.dart';
 
+import '../../../../../constants.dart';
 import '../../../../../core/utils/asset_data.dart';
 
 class LogoPart extends StatefulWidget {
@@ -90,7 +92,11 @@ class _LogoPartState extends State<LogoPart>
     Future.delayed(
       const Duration(seconds: 3),
       () {
-        GoRouter.of(context).pushReplacement(AppRouter.onBoardingRoute);
+        var box = Hive.box(kEmail);
+
+        box.get(kEmail) == null
+            ? GoRouter.of(context).pushReplacement(AppRouter.onBoardingRoute)
+            : GoRouter.of(context).pushReplacement(AppRouter.bottomNavBarRoute);
       },
     );
   }

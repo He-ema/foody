@@ -57,6 +57,7 @@ class ChattingViewBody extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       CircleAvatar(
+                        backgroundColor: Colors.white,
                         radius: 30,
                         backgroundImage: CachedNetworkImageProvider(user.image),
                       ),
