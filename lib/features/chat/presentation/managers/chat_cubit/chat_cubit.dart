@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:foody/features/chat/data/models/message_model.dart';
+import 'package:hive/hive.dart';
 
 import '../../../../../constants.dart';
 
@@ -22,6 +23,18 @@ class ChatCubit extends Cubit<ChatState> {
       }
 
       emit(ChatSuccess(messagesList));
+    });
+  }
+
+  void sendMessage(String collectionName, String message) {
+    CollectionReference chat =
+        FirebaseFirestore.instance.collection(sortName(collectionName));
+    var box = Hive.box(kEmail);
+
+    chat.add({
+      kText: message,
+      kSender: box.get(kEmail),
+      kTime: DateTime.now(),
     });
   }
 
