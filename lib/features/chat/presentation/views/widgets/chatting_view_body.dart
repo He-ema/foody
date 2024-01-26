@@ -8,6 +8,7 @@ import 'package:foody/features/chat/presentation/views/widgets/chat_bubble.dart'
 import 'package:foody/features/profile/data/models/user_model.dart';
 
 import 'chatting_text_field.dart';
+import 'messages_list_view.dart';
 
 class ChattingViewBody extends StatelessWidget {
   const ChattingViewBody({super.key, required this.user});
@@ -69,12 +70,7 @@ class ChattingViewBody extends StatelessWidget {
                   ),
                 ),
               ),
-              Expanded(
-                  child: ListView.builder(
-                padding: EdgeInsets.zero,
-                itemBuilder: (context, index) =>
-                    const ChatBubble(isSender: true),
-              )),
+              const MessagesListView(),
             ],
           ),
         ),

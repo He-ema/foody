@@ -17,4 +17,7 @@ final class ChatFailure extends ChatState {
   const ChatFailure(this.errorMessage);
 }
 
-final class ChatSuccess extends ChatState {}
+final class ChatSuccess extends ChatState {
+  final List<MessageModel> chats;
+  const ChatSuccess(this.chats);
+}
