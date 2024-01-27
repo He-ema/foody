@@ -13,24 +13,14 @@ class ChatCubit extends Cubit<ChatState> {
 
   List<MessageModel> messagesList = [];
   void getMessages(CollectionReference chat) {
-    emit(ChatLoading());
     chat.orderBy(kTime, descending: true).snapshots().listen((event) {
+      emit(ChatLoading());
       messagesList.clear();
-
       for (var doc in event.docs) {
         messagesList.add(MessageModel.fromJson(doc));
       }
+
       emit(ChatSuccess(messagesList));
-    });
-  }
-
-  Stream<List<MessageModel>> getMessages2(CollectionReference chat) {
-    return chat.orderBy(kTime, descending: true).snapshots().map((event) {
-      List<MessageModel> messagesList = [];
-      for (var doc in event.docs) {
-        messagesList.add(MessageModel.fromJson(doc));
-      }
-      return messagesList;
     });
   }
 

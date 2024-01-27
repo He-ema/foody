@@ -31,22 +31,30 @@ class _MessagesListViewState extends State<MessagesListView> {
     BlocProvider.of<ChatCubit>(context).getMessages(chat);
   }
 
+  List<MessageModel> messages = [];
   @override
   Widget build(BuildContext context) {
-    return Expanded(child: BlocBuilder<ChatCubit, ChatState>(
+    return Expanded(
+        child: BlocConsumer<ChatCubit, ChatState>(
+      listener: (context, state) {
+        if (state is ChatSuccess) {
+          messages = state.messages;
+        }
+      },
       builder: (context, state) {
         var box = Hive.box(kEmail);
-        List<MessageModel> messages =
-            BlocProvider.of<ChatCubit>(context).messagesList;
+        // List<MessageModel> messages =
+        //     BlocProvider.of<ChatCubit>(context).messagesList;
         if (state is ChatSuccess) {
           return ListView.builder(
             itemCount: messages.length,
             reverse: true,
             padding: EdgeInsets.zero,
             itemBuilder: (context, index) => ChatBubble(
-              isSender:
-                  messages[index].sender == box.get(kEmail) ? true : false,
-              text: messages[index].text,
+              isSender: state.messages[index].sender == box.get(kEmail)
+                  ? true
+                  : false,
+              text: state.messages[index].text,
             ),
           );
         } else {

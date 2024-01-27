@@ -11,9 +11,11 @@ import 'chatting_text_field.dart';
 import 'messages_list_view.dart';
 
 class ChattingViewBody extends StatelessWidget {
-  const ChattingViewBody(
-      {super.key, required this.user, required this.messages});
-  final List<MessageModel> messages;
+  const ChattingViewBody({
+    super.key,
+    required this.user,
+  });
+
   final UserModel user;
   @override
   Widget build(BuildContext context) {
@@ -71,19 +73,9 @@ class ChattingViewBody extends StatelessWidget {
                   ),
                 ),
               ),
-              Expanded(
-                  child: ListView.builder(
-                itemCount: messages.length,
-                reverse: true,
-                padding: EdgeInsets.zero,
-                itemBuilder: (context, index) => ChatBubble(
-                  isSender: true,
-                  text: messages[index].text,
-                ),
-              )),
-              // MessagesListView(
-              //   email: user.email,
-              // ),
+              MessagesListView(
+                email: user.email,
+              ),
               const SizedBox(
                 height: 63,
               ),
