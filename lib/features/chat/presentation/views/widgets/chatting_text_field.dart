@@ -37,7 +37,15 @@ class _ChattingTextFieldState extends State<ChattingTextField> {
         filled: true,
         fillColor: Colors.white,
         suffixIcon: IconButton(
-          onPressed: () {},
+          onPressed: () {
+            if (controller.text.isNotEmpty || controller.text != ' ') {
+              var box = Hive.box(kEmail);
+
+              BlocProvider.of<ChatCubit>(context)
+                  .sendMessage(box.get(kEmail) + widget.email, controller.text);
+              controller.clear();
+            }
+          },
           icon: const Icon(
             Icons.send,
             color: kPrimaryColor,
