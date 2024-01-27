@@ -3,10 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:foody/constants.dart';
 import 'package:foody/core/common/custom_icon.dart';
 import 'package:foody/core/utils/styles.dart';
-import 'package:foody/features/chat/data/models/message_model.dart';
 import 'package:foody/features/profile/data/models/user_model.dart';
 
-import 'chat_bubble.dart';
 import 'chatting_text_field.dart';
 import 'messages_list_view.dart';
 

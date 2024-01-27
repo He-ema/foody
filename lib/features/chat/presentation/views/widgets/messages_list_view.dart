@@ -23,12 +23,7 @@ class _MessagesListViewState extends State<MessagesListView> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    var box = Hive.box(kEmail);
-    String currentChat = sortName(box.get(kEmail) + widget.email);
-    print(currentChat);
-    CollectionReference chat =
-        FirebaseFirestore.instance.collection(currentChat);
-    BlocProvider.of<ChatCubit>(context).getMessages(chat);
+    BlocProvider.of<ChatCubit>(context).getMessages(widget.email);
   }
 
   List<MessageModel> messages = [];
@@ -58,7 +53,7 @@ class _MessagesListViewState extends State<MessagesListView> {
             ),
           );
         } else {
-          return Center(
+          return const Center(
             child: CircularProgressIndicator(),
           );
         }

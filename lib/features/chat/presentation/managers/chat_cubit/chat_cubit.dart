@@ -12,7 +12,10 @@ class ChatCubit extends Cubit<ChatState> {
   ChatCubit() : super(ChatInitial());
 
   List<MessageModel> messagesList = [];
-  void getMessages(CollectionReference chat) {
+  void getMessages(String receiverName) {
+    var box = Hive.box(kEmail);
+    CollectionReference chat = FirebaseFirestore.instance
+        .collection(sortName(receiverName + box.get(kEmail)));
     chat.orderBy(kTime, descending: true).snapshots().listen((event) {
       emit(ChatLoading());
       messagesList.clear();
