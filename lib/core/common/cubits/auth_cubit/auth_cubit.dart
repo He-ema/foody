@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:meta/meta.dart';
 import '../../../../constants.dart';
@@ -120,6 +121,7 @@ class AuthCubit extends Cubit<AuthState> {
       emit(AuthSuccess());
       return await FirebaseAuth.instance.signInWithCredential(credential);
     } catch (e) {
+      print(e.toString());
       emit(AuthFailure(
           erroHeader: 'Error',
           errorMessage: 'Something went wrong , try again'));
@@ -141,6 +143,9 @@ class AuthCubit extends Cubit<AuthState> {
             'https://firebasestorage.googleapis.com/v0/b/food-5f010.appspot.com/o/avatar.png?alt=media&token=76a28738-9cfb-44e2-8113-dd4549002466',
         kVerified: verified,
         kPhone: '?',
+        // kFname: ' ',
+        // kSname: ' ',
+        kToken: await FirebaseMessaging.instance.getToken(),
       });
     } catch (e) {
       print(e.toString());
@@ -164,6 +169,7 @@ class AuthCubit extends Cubit<AuthState> {
       });
       emit(AuthSuccess());
     } catch (e) {
+      print(e.toString());
       emit(AuthFailure(
           erroHeader: 'Error',
           errorMessage: 'Error creating user , try again'));

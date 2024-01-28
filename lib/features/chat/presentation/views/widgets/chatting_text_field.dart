@@ -5,8 +5,10 @@ import 'package:foody/features/chat/presentation/managers/chat_cubit/chat_cubit.
 import 'package:hive/hive.dart';
 
 class ChattingTextField extends StatefulWidget {
-  const ChattingTextField({super.key, required this.email});
+  const ChattingTextField(
+      {super.key, required this.email, required this.token});
   final String email;
+  final String token;
 
   @override
   State<ChattingTextField> createState() => _ChattingTextFieldState();
@@ -27,6 +29,11 @@ class _ChattingTextFieldState extends State<ChattingTextField> {
 
         BlocProvider.of<ChatCubit>(context)
             .sendMessage(box.get(kEmail) + widget.email, value);
+        BlocProvider.of<ChatCubit>(context).sendNotification(
+          title: 'DidFoood Delivery Service',
+          body: controller.text,
+          token: widget.token,
+        );
         controller.clear();
         // _controller.animateTo(0,
         //     duration: Duration(milliseconds: 500),
@@ -43,6 +50,11 @@ class _ChattingTextFieldState extends State<ChattingTextField> {
 
               BlocProvider.of<ChatCubit>(context)
                   .sendMessage(box.get(kEmail) + widget.email, controller.text);
+              BlocProvider.of<ChatCubit>(context).sendNotification(
+                title: 'DidFoood Delivery Service',
+                body: controller.text,
+                token: widget.token,
+              );
               controller.clear();
             }
           },

@@ -20,7 +20,7 @@ class MyAppBar extends StatelessWidget {
       automaticallyImplyLeading: false,
       pinned: true,
       backgroundColor: Colors.white,
-      expandedHeight: 155,
+      expandedHeight: 160,
       flexibleSpace: LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) {
           var top = 0.0;

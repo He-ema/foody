@@ -6,6 +6,7 @@ class UserModel {
   final String email;
   final String phone;
   final String image;
+  final String token;
 
   UserModel({
     required this.firstName,
@@ -13,6 +14,7 @@ class UserModel {
     required this.email,
     required this.phone,
     required this.image,
+    required this.token,
   });
 
   factory UserModel.fromJson(jsonData) {
@@ -22,6 +24,7 @@ class UserModel {
       email: jsonData[kEmail],
       phone: jsonData[kPhone],
       image: jsonData[kImage],
+      token: jsonData[kToken],
     );
   }
 }

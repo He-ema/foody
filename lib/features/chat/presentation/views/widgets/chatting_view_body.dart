@@ -85,6 +85,7 @@ class ChattingViewBody extends StatelessWidget {
           left: 5,
           right: 5,
           child: ChattingTextField(
+            token: user.token,
             email: user.email,
           ),
         ),
