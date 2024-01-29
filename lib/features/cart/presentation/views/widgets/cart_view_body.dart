@@ -7,6 +7,7 @@ import 'package:foody/core/common/widgets/custom_button.dart';
 import 'package:foody/core/utils/asset_data.dart';
 import 'package:foody/core/utils/styles.dart';
 import 'package:foody/features/cart/presentation/manager/cart_cubit/cart_cubit.dart';
+import 'package:foody/features/cart/presentation/views/widgets/payment_sheet_body.dart';
 import 'package:foody/features/cart/presentation/views/widgets/product_container.dart';
 
 import 'empty_cart_view.dart';
@@ -196,7 +197,20 @@ class _CartViewBodyState extends State<CartViewBody> {
                                   fillColor: Colors.white,
                                   textColor: kPrimaryColor,
                                   text: 'Confirm',
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    showModalBottomSheet(
+                                      shape: const RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(15),
+                                        topRight: Radius.circular(15),
+                                      )),
+                                      isScrollControlled: true,
+                                      isDismissible: true,
+                                      context: context,
+                                      builder: (context) =>
+                                          const PaymentSheetBody(),
+                                    );
+                                  },
                                 ),
                               )
                             ],
