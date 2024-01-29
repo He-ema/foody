@@ -45,11 +45,19 @@ class _MessagesListViewState extends State<MessagesListView> {
             itemCount: messages.length,
             reverse: true,
             padding: EdgeInsets.zero,
-            itemBuilder: (context, index) => ChatBubble(
-              isSender: state.messages[index].sender == box.get(kEmail)
-                  ? true
-                  : false,
-              text: state.messages[index].text,
+            itemBuilder: (context, index) => Row(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: state.messages[index].sender == box.get(kEmail)
+                  ? MainAxisAlignment.start
+                  : MainAxisAlignment.end,
+              children: [
+                ChatBubble(
+                  isSender: state.messages[index].sender == box.get(kEmail)
+                      ? true
+                      : false,
+                  text: state.messages[index].text,
+                ),
+              ],
             ),
           );
         } else {

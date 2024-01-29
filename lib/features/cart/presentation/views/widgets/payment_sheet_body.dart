@@ -5,8 +5,8 @@ import 'package:foody/core/utils/styles.dart';
 import 'package:foody/features/cart/presentation/views/widgets/payment_text_field.dart';
 
 class PaymentSheetBody extends StatefulWidget {
-  const PaymentSheetBody({super.key});
-
+  const PaymentSheetBody({super.key, required this.removeListItems});
+  final Function removeListItems;
   @override
   State<PaymentSheetBody> createState() => _PaymentSheetBodyState();
 }
@@ -88,6 +88,7 @@ class _PaymentSheetBodyState extends State<PaymentSheetBody> {
                   setState(() {});
                   Future.delayed(Duration(seconds: 2), () {
                     Navigator.pop(context);
+                    widget.removeListItems();
                   });
                 } else {
                   autovalidateMode = AutovalidateMode.always;

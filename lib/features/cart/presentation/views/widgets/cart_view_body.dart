@@ -44,8 +44,17 @@ class _CartViewBodyState extends State<CartViewBody> {
             WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
               setState(() {
                 startAnimation = true;
+                pricee = state.price;
               });
             });
+            void confirmPurchasing() {
+              isOpened = false;
+              setState(() {});
+              Future.delayed(Duration(seconds: 2), () {
+                removeAllFromList(state);
+              });
+            }
+
             return Stack(
               alignment: Alignment.bottomCenter,
               children: [
@@ -207,8 +216,10 @@ class _CartViewBodyState extends State<CartViewBody> {
                                       isScrollControlled: true,
                                       isDismissible: true,
                                       context: context,
-                                      builder: (context) =>
-                                          const PaymentSheetBody(),
+                                      builder: (context) {
+                                        return PaymentSheetBody(
+                                            removeListItems: confirmPurchasing);
+                                      },
                                     );
                                   },
                                 ),
