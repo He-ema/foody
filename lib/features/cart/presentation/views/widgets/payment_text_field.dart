@@ -9,17 +9,32 @@ class PaymentTextField extends StatelessWidget {
   final String label;
   @override
   Widget build(BuildContext context) {
+    bool isError = false;
     return TextFormField(
       onTapOutside: (event) {
         FocusManager.instance.primaryFocus?.unfocus();
       },
+      validator: (value) {
+        if (value!.isEmpty ?? true) {
+          isError = true;
+          return 'this field can\'t be empty';
+        }
+      },
       cursorColor: kPrimaryColor,
+      keyboardType: TextInputType.number,
       autofocus: autoFocus,
       decoration: InputDecoration(
         labelText: label,
         labelStyle: const TextStyle(fontWeight: FontWeight.bold),
         floatingLabelStyle: const TextStyle(color: kPrimaryColor),
+        errorBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: const Color.fromARGB(255, 14, 13, 13),
+          ),
+          borderRadius: BorderRadius.circular(5),
+        ),
         enabledBorder: createBorder(),
+        border: createBorder(),
         focusedBorder: createBorder(isEnabled: true),
       ),
     );
