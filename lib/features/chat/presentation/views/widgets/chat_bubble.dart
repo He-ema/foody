@@ -18,7 +18,7 @@ class ChatBubble extends StatelessWidget {
                 begin: Alignment.centerLeft,
                 end: Alignment.centerRight)
             : LinearGradient(
-                colors: [Colors.grey.shade400, Colors.grey.shade400],
+                colors: [Colors.grey, Colors.grey.shade700],
                 begin: Alignment.centerLeft,
                 end: Alignment.centerRight),
 
