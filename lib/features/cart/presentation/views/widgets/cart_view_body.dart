@@ -6,6 +6,7 @@ import 'package:foody/constants.dart';
 import 'package:foody/core/common/widgets/custom_button.dart';
 import 'package:foody/core/utils/asset_data.dart';
 import 'package:foody/core/utils/styles.dart';
+import 'package:foody/features/cart/data/models/cart_model.dart';
 import 'package:foody/features/cart/presentation/manager/cart_cubit/cart_cubit.dart';
 import 'package:foody/features/cart/presentation/views/widgets/payment_sheet_body.dart';
 import 'package:foody/features/cart/presentation/views/widgets/product_container.dart';
@@ -50,6 +51,15 @@ class _CartViewBodyState extends State<CartViewBody> {
             void confirmPurchasing() {
               isOpened = false;
               setState(() {});
+              List<CartModel> proList = state.cartItems;
+              CollectionReference cart = FirebaseFirestore.instance
+                  .collection(widget.email + kCartCollectionReference);
+              Future.delayed(const Duration(seconds: 2), () {
+                for (var element in proList) {
+                  cart.doc(element.id).delete();
+                }
+              });
+
               Future.delayed(Duration(seconds: 2), () {
                 removeAllFromList(state);
               });
