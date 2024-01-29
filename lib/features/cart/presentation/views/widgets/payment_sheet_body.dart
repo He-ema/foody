@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:foody/constants.dart';
 import 'package:foody/core/common/widgets/custom_button.dart';
 import 'package:foody/core/utils/styles.dart';
+import 'package:foody/features/cart/presentation/views/widgets/payment_text_field.dart';
 
 class PaymentSheetBody extends StatelessWidget {
   const PaymentSheetBody({super.key});
@@ -51,24 +52,24 @@ class PaymentSheetBody extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Container(
+              SizedBox(
+                width: (MediaQuery.of(context).size.width * 0.5) - 20,
                 child: const PaymentTextField(
                   label: 'MM/YY',
                 ),
-                width: (MediaQuery.of(context).size.width * 0.5) - 20,
               ),
-              Container(
+              SizedBox(
+                width: (MediaQuery.of(context).size.width * 0.5) - 20,
                 child: const PaymentTextField(
                   label: 'CVC',
                 ),
-                width: (MediaQuery.of(context).size.width * 0.5) - 20,
               ),
             ],
           ),
           const SizedBox(
             height: 40,
           ),
-          Container(
+          SizedBox(
             width: MediaQuery.of(context).size.width,
             child: CustomButton(
               text: 'Pay',
@@ -82,34 +83,4 @@ class PaymentSheetBody extends StatelessWidget {
       ),
     );
   }
-}
-
-class PaymentTextField extends StatelessWidget {
-  const PaymentTextField(
-      {super.key, this.autoFocus = false, required this.label});
-  final bool autoFocus;
-  final String label;
-  @override
-  Widget build(BuildContext context) {
-    return TextFormField(
-      cursorColor: kPrimaryColor,
-      autofocus: autoFocus,
-      decoration: InputDecoration(
-        labelText: label,
-        labelStyle: TextStyle(fontWeight: FontWeight.bold),
-        floatingLabelStyle: TextStyle(color: kPrimaryColor),
-        enabledBorder: createBorder(),
-        focusedBorder: createBorder(isEnabled: true),
-      ),
-    );
-  }
-
-  OutlineInputBorder createBorder(
-          {bool isEnabled = false}) =>
-      OutlineInputBorder(
-          borderRadius: BorderRadius.circular(5),
-          borderSide: BorderSide(
-              width: isEnabled ? 2 : 1,
-              color:
-                  isEnabled ? kPrimaryColor : kPrimaryColor.withOpacity(0.9)));
 }

@@ -12,6 +12,9 @@ class HomeTextField extends StatelessWidget {
     return Container(
       width: MediaQuery.of(context).size.width * 0.75,
       child: TextField(
+        onTapOutside: (event) {
+          FocusManager.instance.primaryFocus?.unfocus();
+        },
         decoration: InputDecoration(
           prefixIcon: const Icon(
             Icons.search_rounded,
