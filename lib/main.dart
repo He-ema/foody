@@ -7,7 +7,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foody/constants.dart';
 import 'package:foody/core/common/cubits/auth_cubit/auth_cubit.dart';
-import 'package:foody/core/services/firebase_notification_service.dart';
 import 'package:foody/core/theme/theme_cubit/theme_cubit.dart';
 import 'package:foody/core/utils/app_router.dart';
 import 'package:foody/core/utils/asset_data.dart';
