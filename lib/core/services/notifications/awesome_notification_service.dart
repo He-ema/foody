@@ -27,7 +27,7 @@ class NotificationService {
           channelGroupName: 'Group 1',
         )
       ],
-      debug: false,
+      debug: true,
     );
 
     await AwesomeNotifications().isNotificationAllowed().then(

@@ -17,7 +17,7 @@ import 'package:foody/features/home/presentation/manager/products_cubit/products
 import 'package:foody/simple_bloc_observer.dart';
 import 'package:hive_flutter/adapters.dart';
 
-import 'core/services/awesome_notification_service.dart';
+import 'core/services/notifications/awesome_notification_service.dart';
 import 'features/chat/presentation/managers/chat_cubit/chat_cubit.dart';
 import 'firebase_options.dart';
 
